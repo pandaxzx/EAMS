@@ -4,22 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jdrx.eams</groupId>
-    <artifactId>jdrx-eams-start</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-
-    <modules>
-        <module>jdrx-eams-beans</module>
-        <module>jdrx-eams-api</module>
-        <module>jdrx-eams-boot</module>
-    </modules>
-
     <parent>
         <artifactId>platform-parent</artifactId>
         <groupId>com.jdrx.platform</groupId>
         <version>1.2.4</version>
     </parent>
+
+    <groupId>com.jdrx.eams</groupId>
+    <artifactId>jdrx-eams-starter</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <properties>
         <downloadSources>true</downloadSources>
@@ -28,10 +22,26 @@
         <jdrx.platform.version>1.2.4</jdrx.platform.version>
     </properties>
 
+    <modules>
+        <module>jdrx-eams-boot</module>
+        <module>jdrx-eams-beans</module>
+        <module>jdrx-eams-api</module>
+    </modules>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Camden.SR6</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
-        <dependency>
+            <dependency>
             <groupId>com.jdrx.platform</groupId>
             <artifactId>platform-jdbc-mysql</artifactId>
             <version>${jdrx.platform.version}</version>
@@ -40,12 +50,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>Test</scope>
+            <scope>test</scope>
         </dependency>
-
     </dependencies>
 </project>
