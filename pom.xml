@@ -41,7 +41,7 @@
     </dependencyManagement>
 
     <dependencies>
-            <dependency>
+        <dependency>
             <groupId>com.jdrx.platform</groupId>
             <artifactId>platform-jdbc-mysql</artifactId>
             <version>${jdrx.platform.version}</version>

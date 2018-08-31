@@ -132,5 +132,4 @@ public class RedisConsumeBGService {
         return redisQueue;
     }
 
-
 }
