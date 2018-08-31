@@ -1,13 +1,11 @@
 package com.jdrx.eams.beans.bo;
 
-import com.google.common.collect.Lists;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
-
 import javax.validation.constraints.NotNull;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
