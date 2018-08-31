@@ -1,4 +1,4 @@
-package com.jdrx.platform.sample.beans.dto;
+package com.jdrx.eams.beans.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

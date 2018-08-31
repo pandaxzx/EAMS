@@ -1,4 +1,4 @@
-package com.jdrx.platform.sample.beans.entry;
+package com.jdrx.eams.beans.entry;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;

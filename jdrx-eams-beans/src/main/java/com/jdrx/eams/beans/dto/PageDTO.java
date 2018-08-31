@@ -1,4 +1,4 @@
-package com.jdrx.platform.sample.beans.dto;
+package com.jdrx.eams.beans.dto;
 
 import com.jdrx.platform.commons.rest.beans.dto.PageBaseDTO;
 import io.swagger.annotations.ApiModel;

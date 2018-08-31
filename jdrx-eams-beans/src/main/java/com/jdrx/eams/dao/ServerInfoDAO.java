@@ -1,11 +1,9 @@
-package com.jdrx.platform.sample.dao;
+package com.jdrx.eams.dao;
 
 import com.jdrx.platform.commons.rest.exception.BizException;
 import com.jdrx.platform.commons.rest.utils.JsonMapper;
 import com.jdrx.platform.jdbc.beans.vo.PageVO;
-import com.jdrx.platform.sample.beans.dto.ServerInfoDTO;
-import com.jdrx.platform.sample.beans.entry.ServerInfoPO;
-import org.springframework.beans.BeanUtils;
+import com.jdrx.eams.beans.entry.ServerInfoPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanMap;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +13,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
-import springfox.documentation.spring.web.json.Json;
 
 import java.util.List;
 import java.util.Map;

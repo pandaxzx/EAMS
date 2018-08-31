@@ -1,4 +1,4 @@
-package com.jdrx.platform.sample.config;
+package com.jdrx.eams.config;
 
 import org.springframework.stereotype.Service;
 

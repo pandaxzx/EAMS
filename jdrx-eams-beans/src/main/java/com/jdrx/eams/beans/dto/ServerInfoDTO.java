@@ -1,8 +1,8 @@
-package com.jdrx.platform.sample.beans.dto;
+package com.jdrx.eams.beans.dto;
 
-import com.jdrx.platform.sample.beans.entry.CpuPO;
-import com.jdrx.platform.sample.beans.entry.DiskPO;
-import com.jdrx.platform.sample.beans.entry.InterfacePO;
+import com.jdrx.eams.beans.entry.CpuPO;
+import com.jdrx.eams.beans.entry.DiskPO;
+import com.jdrx.eams.beans.entry.InterfacePO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;

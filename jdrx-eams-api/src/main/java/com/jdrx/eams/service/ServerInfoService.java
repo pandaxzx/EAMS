@@ -1,16 +1,14 @@
-package com.jdrx.platform.sample.service;
+package com.jdrx.eams.service;
 
+import com.jdrx.eams.dao.ServerInfoDAO;
 import com.jdrx.platform.commons.rest.exception.BizException;
 import com.jdrx.platform.jdbc.beans.vo.PageVO;
-import com.jdrx.platform.sample.beans.dto.PageDTO;
-import com.jdrx.platform.sample.beans.dto.ServerInfoDTO;
-import com.jdrx.platform.sample.beans.entry.ServerInfoPO;
-import com.jdrx.platform.sample.dao.ServerInfoDAO;
+import com.jdrx.eams.beans.dto.PageDTO;
+import com.jdrx.eams.beans.dto.ServerInfoDTO;
+import com.jdrx.eams.beans.entry.ServerInfoPO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ServerInfoService {

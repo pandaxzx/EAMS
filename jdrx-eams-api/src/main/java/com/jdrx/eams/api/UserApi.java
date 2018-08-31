@@ -1,18 +1,16 @@
-package com.jdrx.platform.sample.api;
+package com.jdrx.eams.api;
 
-import com.github.pagehelper.PageHelper;
 import com.jdrx.basic.rbac.service.UserService;
 import com.jdrx.platform.commons.rest.beans.dto.IdDTO;
 import com.jdrx.platform.commons.rest.beans.vo.ResposeVO;
 import com.jdrx.platform.commons.rest.exception.BizException;
 import com.jdrx.platform.commons.rest.factory.ResponseFactory;
-import com.jdrx.platform.sample.beans.dto.PageDTO;
+import com.jdrx.eams.beans.dto.PageDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 

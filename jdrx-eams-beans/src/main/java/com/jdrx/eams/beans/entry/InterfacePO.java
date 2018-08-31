@@ -1,4 +1,4 @@
-package com.jdrx.platform.sample.beans.entry;
+package com.jdrx.eams.beans.entry;
 
 public class InterfacePO {
     //ipv4地址

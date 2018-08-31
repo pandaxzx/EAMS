@@ -1,10 +1,9 @@
-package com.jdrx.platform.sample.service;
+package com.jdrx.eams.service;
 
+import com.jdrx.eams.beans.dto.ServerStatusDTO;
+import com.jdrx.eams.dao.ServerStatusDAO;
 import com.jdrx.platform.commons.rest.beans.dto.IdDTO;
 import com.jdrx.platform.commons.rest.exception.BizException;
-import com.jdrx.platform.sample.beans.dto.ServerStatusDTO;
-import com.jdrx.platform.sample.dao.ServerStatusDAO;
-import io.swagger.annotations.ApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
