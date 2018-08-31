@@ -33,5 +33,5 @@ angular.module('app.eams',['ui.router','ui.bootstrap', 'w5c.validator'])
         });
     }])
     .controller("EAMSCtrl", EAMSCtrl)
-    // .controller('StudentModalCtrl',StudentModalCtrl)
+    .controller('EAMSModalCtrl',EAMSModalCtrl)
     .service('EAMSService', EAMSService);

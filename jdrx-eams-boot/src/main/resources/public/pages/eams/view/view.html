@@ -26,16 +26,21 @@
 
                 <th>操作</th>
             </tr>
-            <tr ng-repeat="(ip,data) in result.map">
+            <tr ng-repeat="(ip,data) in result.map" >
                 <td>{{data.ip}}</td>
                 <td>{{data.host}}</td>
                 <td>{{data.startAt}}</td>
-                <td>{{data.memory}}</td>
+                <td>{{data.memory}} G</td>
                 <td>{{data.cpus.length}}</td>
                 <td>{{data.interfaces.length}}</td>
-                <td>{{data.status}}</td>
                 <td>
-                    <a href="javascript:" ng-click="detail(data.ip)">详情</a>
+                    <a ng-show="data.status" href="javascript:" ng-click="getStatus(data)">在线</a>
+                    <span ng-hide="data.status">下线</span>
+                </td>
+                <td>
+                    <!-- <a href="javascript:" ng-click="getStatus(data)">状态</a> -->
+                    <a href="javascript:" ng-click="detail(data)">详情</a>
+                    <a href="javascript:" ng-click="refreshStatus(data)">刷新</a>
                     <a href="javascript:" ng-click="del(data.ip)">删除</a>
                     <a href="javascript:" ng-click="upd(data)">修改</a>
                 </td>

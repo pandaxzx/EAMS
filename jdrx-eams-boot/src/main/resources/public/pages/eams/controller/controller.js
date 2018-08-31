@@ -72,6 +72,32 @@ var EAMSCtrl = function ($scope,$uibModal,$log,EAMSService) {
 
 
     // 绑定事件
+    $scope.getStatus = function(server){
+        // EAMSService.getStatus(server.ip)
+        //     .then(function(res){
+        //         server.status = res;
+        //     });
+
+        return '在线';
+    };
+
+    var findStatus = function(){
+        var map = $scope.result.map;
+        var ips = [];
+        for(var ip in map){
+            ips.push(ip);
+        }
+        EAMSService.findStatus(ips)
+            .then(function(res){
+                if( Array.isArray(res) ){
+                    var i = 0;
+                    ips.forEach(function(){
+                        map[ip].status = res[i++];
+                    });
+                }                
+        });
+    };
+
     var find = function(){
         var $page = $scope.result.page;
 
@@ -80,7 +106,9 @@ var EAMSCtrl = function ($scope,$uibModal,$log,EAMSService) {
         selectDto.pageNum = $page.current -1;
         selectDto.pageSize = $page.pageSize;
 
-        EAMSService.listBy(selectDto).then(setResult);
+        EAMSService.listBy(selectDto)
+            .then(setResult)
+            .then(findStatus);
     };
     var findAll = function(){
         var $page = $scope.result.page;
@@ -88,11 +116,36 @@ var EAMSCtrl = function ($scope,$uibModal,$log,EAMSService) {
             pageNum : $page.current - 1,
             pageSize: $page.pageSize
         };
-        EAMSService.listAll(page).then(setResult);
+        EAMSService.listAll(page)
+            .then(setResult)
+            .then(findStatus);
     };
- 
+
     $scope.find = find;
     $scope.findAll = findAll;
+
+
+
+    $scope.detail = function(data){
+        console.log(data);
+        var modalInstance = $uibModal.open({
+            templateUrl: 'pages/eams/view/detail.html',
+            controller: 'EAMSModalCtrl',
+            backdrop: "static",
+            size: 'lg',
+            resolve : {
+                data: function () {
+                    return data;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (dept) {
+
+        }, function (aaa) {
+            
+        });
+    };
 
     $scope.del = function (ip) {
         layer.confirm('确定删除该记录吗？', {
@@ -148,7 +201,6 @@ var EAMSCtrl = function ($scope,$uibModal,$log,EAMSService) {
 
 var EAMSModalCtrl = function ($scope, $uibModalInstance, data) {
     $scope.server = angular.copy(data);
-    $scope.gender = ["MALE","FEMALE"];
     $scope.confirm = function () {
         $uibModalInstance.close($scope.server);
     };

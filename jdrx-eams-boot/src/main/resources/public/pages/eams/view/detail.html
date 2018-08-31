@@ -1,0 +1,84 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="close()"><span>&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">记录详情</h4>
+    </div>
+    <form w5c-form-validate="" novalidate name="customerForm">
+        <div class="modal-body">
+            <div class="table-responsive">
+                <h3>基本信息</h3>
+                <!-- cpus -->
+                <!-- <h4>CPUS</h4> -->
+                <table class="table">
+                    <tr>
+                        <th class="col-sm-1">编号</th>
+                        <th class="col-sm-6">cpu型号</th>
+                        <th class="col-sm-6">核心数</th>
+                        <!-- <th>主频率</th> -->
+                    </tr>
+                    <tr ng-repeat="data in server.cpus">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{data.model}}</td>
+                        <td>{{data.core}}</td>
+                        <!-- <td>{{data.frequency}}</td> -->
+                    </tr>
+                </table>
+                <!-- disks -->
+                <!-- <h4>DISKS</h4> -->
+                <table class="table">
+                    <tr>
+                        <th class="col-sm-1">编号</th>
+                        <th class="col-sm-6">磁盘型号</th>
+                        <th class="col-sm-6">总大小</th>
+                    </tr>
+                    <tr ng-repeat="data in server.disks">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{data.model}}</td>
+                        <td>{{data.size}} G</td>
+                    </tr>
+                </table>
+                <!-- interfaces -->
+                <!-- <h4>INTERFACES</h4> -->
+                <table class="table">
+                    <tr>
+                        <th class="col-sm-1">编号</th>
+                        <th class="col-sm-3">ipv4</th>
+                        <th class="col-sm-3">ipv6</th>
+                        <th class="col-sm-3">mac</th>
+                        <th class="col-sm-3">网关</th>
+                    </tr>
+                    <tr ng-repeat="data in server.interfaces">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{data.ipv4}}</td>
+                        <td>{{data.ipv6}}</td>
+                        <td>{{data.mac}}</td>
+                        <td>{{data.gateway}}</td>
+                    </tr>
+                </table>
+
+                <h3>运行状态</h3>
+                <table class="table">
+                    <tr>
+                        <th class="col-sm-1">编号</th>
+                        <th class="col-sm-3">cpu使用率</th>
+                        <th class="col-sm-3">磁盘使用量</th>
+                        <th class="col-sm-3">内存占用量</th>
+                        <th class="col-sm-3">进程数量</th>
+                    </tr>
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{server.status.cpu}}%</td>
+                        <td>{{server.status.disk}} G</td>
+                        <td>{{server.status.memory}} G</td>
+                        <td>{{server.status.processes}}</td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="close()">返回</button>
+                <!-- <button type="button" class="btn btn-primary" w5c-form-submit="confirm()">保存</button> -->
+            </div>
+        </div>
+    </form>
+</div>
