@@ -13,6 +13,7 @@ var EAMSCtrl = function ($scope,$uibModal,$log,EAMSService) {
         memory: undefined,
         interfaces: undefined, //array
         startAt: undefined,
+        status: undefined,
     };
     // 数据集合及分页信息
     $scope.result = {
@@ -41,7 +42,7 @@ var EAMSCtrl = function ($scope,$uibModal,$log,EAMSService) {
         var map = {};
         if( data && data.length ){
             data.forEach(function(item){
-                map[item.id]=item;
+                map[item.ip]=item;
             });
         }
         $scope.result.map = map;
