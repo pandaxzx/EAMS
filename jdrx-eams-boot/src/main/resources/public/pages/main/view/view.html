@@ -1,0 +1,26 @@
+<div class="page-container">
+    <div class="header">
+        logo
+        <div style="float: right;" class="btn-group" uib-dropdown ng-init="dropdownItems=['用户信息','通知消息','退出']">
+            <button id="single-button" type="button" class="btn btn-link exit" uib-dropdown-toggle>
+                <i class="glyphicon glyphicon-off"></i>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+                <li ng-repeat="item in dropdownItems">
+                    <a href="#">{{item}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid page">
+        <div class="col-md-2 layer-left">
+            <jdrx-menu menus="menus"></jdrx-menu>
+        </div>
+        <div class="col-md-10 layer-right">
+            <ng-breadcrumb></ng-breadcrumb>
+            <div class="page-content">
+                <ui-view></ui-view>
+            </div>
+        </div>
+    </div>
+</div>

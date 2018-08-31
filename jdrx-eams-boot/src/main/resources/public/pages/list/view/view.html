@@ -1,0 +1,65 @@
+<div>
+    <div class="action-bar">
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="exampleInputName2">规则编号</label>
+                <input type="text" class="form-control" id="exampleInputName2" placeholder="00001">
+            </div>
+            <div class="form-group">
+                <label>更新时间</label>
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dat"
+                       is-open="popup1.opened" ng-required="true" close-text="关闭"
+                       30 clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"/>
+                <span class="input-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="open1()">
+                         <i class="glyphicon glyphicon-calendar"></i>
+                     </button>
+                 </span>
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+            <button class="btn btn-primary" ng-click="toAdd()">新增</button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>规则编号</th>
+                <th>描述</th>
+                <th>服务调用次数</th>
+                <th>状态</th>
+                <th>更新时间</th>
+                <th>操作</th>
+            </tr>
+            <tr ng-repeat="data in result.list">
+                <td>{{data.code}}</td>
+                <td>{{data.desc}}</td>
+                <td>{{data.count}}</td>
+                <td>{{data.state}}</td>
+                <td>{{data.time|date: 'yyyy-MM-dd'}}</td>
+                <td>
+                    <a href="javascript:" ng-click="del()">删除</a>
+                    <a href="javascript:" ng-click="upd(data)">修改</a>
+                </td>
+            </tr>
+        </table>
+        <div class="pagination-bar">
+            <uib-pagination
+                    total-items="result.page.total"
+                    ng-model="result.page.current"
+                    max-size="2"
+                    items-per-page="result.page.pageSize"
+                    first-text="第一页"
+                    previous-text="上一页"
+                    next-text="下一页"
+                    last-text="最后页"
+                    boundary-links="true"
+                    boundary-link-numbers="true"
+                    ng-model="result.page.current"
+                    ng-change="onPageChange()"
+            ></uib-pagination>
+        </div>
+
+    </div>
+</div>

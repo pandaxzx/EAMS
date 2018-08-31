@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="libs/ui-bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="libs/nprogress/nprogress.css">
+    <link rel="stylesheet" href="common/css/common.css">
+    <script src="http://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+    <script src="libs/angular/angular.min.js"></script>
+    <script src="libs/angular/angular-locale_zh-cn.js"></script>
+    <script src="libs/angular/angular-ui-router.min.js"></script>
+    <script src="libs/ui-bootstrap/js/ui-bootstrap-tpls-1.3.2.js"></script>
+    <!-- 验证 -->
+    <script src="libs/angular-w5cValidator/w5cValidator.js"></script>
+    <script src="libs/angular-w5cValidator/directive.js"></script>
+    <script src="libs/layer/layer.js"></script>
+    <script src="libs/nprogress/nprogress.js"></script>
+    <script src="common/js/common.js"></script>
+
+</head>
+<body ng-app="app">
+    <ui-view></ui-view>
+</body>
+<script src="app.js"></script>
+<script src="route.js"></script>
+<!--拦截器引入-->
+<script src="interceptor/interceptor.js"></script>
+<!--自定义组件引入-->
+<script src="components/jdrx-menu.js"></script>
+<script src="components/breadcrumb.js"></script>
+
+
+<!--每个页面相关的js;加载顺序controller->index-->
+<!--main-->
+<script src="./pages/main/controller/controller.js"></script>
+<script src="./pages/main/index.js"></script>
+<!--login-->
+<script src="./pages/login/controller/controller.js"></script>
+<script src="./pages/login/index.js"></script>
+<!--list-->
+<script src="./pages/list/controller/controller.js"></script>
+<script src="./pages/list/service/service.js"></script>
+<script src="./pages/list/index.js"></script>
+<!--home-->
+<script src="./pages/home/controller/controller.js"></script>
+<script src="./pages/home/service/service.js"></script>
+<script src="./pages/home/index.js"></script>
+<!--student-->
+<script src="./pages/student/controller/controller.js"></script>
+<script src="./pages/student/service/service.js"></script>
+<script src="./pages/student/index.js"></script>
+<!--eams-->
+<script src="./pages/eams/controller/controller.js"></script>
+<script src="./pages/eams/service/service.js"></script>
+<script src="./pages/eams/index.js"></script>
+<!--rbac_user-->
+<script src="./pages/rbac_user/controller/controller.js"></script>
+<script src="./pages/rbac_user/service/service.js"></script>
+<script src="./pages/rbac_user/index.js"></script>
+<!--rbac_dept-->
+<script src="./pages/rbac_dept/controller/controller.js"></script>
+<script src="./pages/rbac_dept/service/service.js"></script>
+<script src="./pages/rbac_dept/index.js"></script>
+<!--rbac_role-->
+<script src="./pages/rbac_role/controller/controller.js"></script>
+<script src="./pages/rbac_role/service/service.js"></script>
+<script src="./pages/rbac_role/index.js"></script>
+<!--rbac_resource-->
+<script src="./pages/rbac_resource/controller/controller.js"></script>
+<script src="./pages/rbac_resource/service/service.js"></script>
+<script src="./pages/rbac_resource/index.js"></script>
+</html>

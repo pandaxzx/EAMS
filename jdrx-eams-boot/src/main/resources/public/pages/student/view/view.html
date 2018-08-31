@@ -1,0 +1,116 @@
+<div>
+    <div class="action-bar">
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="exampleInputName1">学生ID</label>
+                <input type="number" class="form-control" id="exampleInputName1" placeholder="00001" ng-model="stu.id">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputName2">学生姓名</label>
+                <input type="text" class="form-control" id="exampleInputName2" placeholder="string" ng-model="stu.name">
+            </div>
+            <div class="form-group">
+                <label for="updateAtGte">开始时间</label>
+            </div>
+            <div class="input-group">
+                <input  type="text" 
+                        id="updateAtGte"
+                        class="form-control" 
+                        uib-datepicker-popup="{{format}}" 
+                        ng-model="stu.updateAtGte"
+                        is-open="popup1.opened" 
+                        ng-required="true" 
+                        close-text="关闭"
+                        30 
+                        datepicker-options="popup1.dateOptions"
+                        ng-model-options="popup1.modelOptions"
+                        clear-text="清空" 
+                        current-text="今天" 
+                        alt-input-formats="altInputFormats"/>
+                <span class="input-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="open1()">
+                         <i class="glyphicon glyphicon-calendar"></i>
+                     </button>
+                 </span>
+            </div>
+            <div class="form-group">
+                <label for="updateAtLte">结束时间</label>
+            </div>
+            <div class="input-group">
+                <input  type="text" 
+                        id="updateAtLte"
+                        class="form-control" 
+                        uib-datepicker-popup="{{format}}" 
+                        ng-model="stu.updateAtLte"
+                        is-open="popup2.opened" 
+                        ng-required="true" 
+                        close-text="关闭"
+                        30 
+                        clear-text="清空" 
+                        datepicker-options="popup2.dateOptions"
+                        current-text="今天" 
+                        alt-input-formats="altInputFormats"/>
+                <span class="input-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="open2()">
+                         <i class="glyphicon glyphicon-calendar"></i>
+                     </button>
+                 </span>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputName2">BLOGS</label>
+                <input type="text" class="form-control" id="exampleInputName5" placeholder="BLOGS" ng-model="stu.blogs">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="find()">搜索</button>
+            <button class="btn btn-primary" ng-click="toAdd()">新增</button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>学生编号</th>
+                <th>学生姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <!-- <th>创建时间</th>
+                <th>创建者</th> -->
+                <th>博客</th> 
+
+                <th>更新时间</th>
+                <th>更新者</th>
+                <th>操作</th>
+            </tr>
+            <tr ng-repeat="(id,data) in result.map">
+                <td>{{data.id}}</td>
+                <td>{{data.name}}</td>
+                <td>{{data.age}}</td>
+                <td>{{data.gender}}</td>
+                <!-- <td>{{data.createAt|date: 'yyyy-MM-dd'}}</td>
+                <td>{{data.createBy}}</td> -->
+                <td>{{data.blogs.toString()}}</td>
+                <td>{{data.updateAt|date: 'yyyy/MM/dd'}}</td>
+                <td>{{data.updateBy}}</td>
+                <td>
+                    <a href="javascript:" ng-click="del(data.id)">删除</a>
+                    <a href="javascript:" ng-click="upd(data)">修改</a>
+                </td>
+            </tr>
+        </table>
+        <div class="pagination-bar">
+            <uib-pagination
+                    total-items="result.page.total"
+                    ng-model="result.page.current"
+                    max-size="2"
+                    items-per-page="result.page.pageSize"
+                    first-text="第一页"
+                    previous-text="上一页"
+                    next-text="下一页"
+                    last-text="最后页"
+                    boundary-links="true"
+                    boundary-link-numbers="true"
+                    ng-model="result.page.current"
+                    ng-change="onPageChange()"
+            ></uib-pagination>
+        </div>
+
+    </div>
+</div>

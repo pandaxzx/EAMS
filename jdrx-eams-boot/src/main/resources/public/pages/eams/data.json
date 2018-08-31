@@ -1,0 +1,25 @@
+{
+    "ip": "192.168.0.2",
+    "host": "jdrx",
+    "cpus": [{
+        "name": "i7",
+        "core": 4,
+        "frequency": 3.5
+    }],
+    "interfaces": [{
+        "ipv4": "192.168.0.0",
+        "ipv6": "46465464asd",
+        "mac": "asdasdasd"
+    }],
+    "memory": 16,
+    "disks": [{
+            "name": "wd",
+            "size": "1000G"
+        },
+        {
+            "name": "wd",
+            "size": "2000 G"
+        }
+    ],
+    "startAt": 1535499418310
+}
