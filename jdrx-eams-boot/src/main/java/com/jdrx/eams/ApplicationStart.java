@@ -12,25 +12,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.jdrx")
-public class ApplicationStart implements CommandLineRunner {
-    @Autowired
-    private JedisConnectionFactory jedisConnectionFactory;
-
-    @Bean
-    public StringRedisTemplate redisTemplate() {
-        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
-        stringRedisTemplate.setConnectionFactory(jedisConnectionFactory);
-        return stringRedisTemplate;
-    }
-
+public class ApplicationStart {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(ApplicationStart.class);
     }
 
-
-    @Override
-    public void run(String... strings) throws Exception {
-
-    }
 }

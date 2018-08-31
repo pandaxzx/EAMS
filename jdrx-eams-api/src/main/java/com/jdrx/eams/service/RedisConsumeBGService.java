@@ -1,7 +1,11 @@
 package com.jdrx.eams.service;
 
 import com.jdrx.eams.beans.bo.RedisQueue;
+import com.jdrx.eams.dao.ServerInfoDAO;
 import com.jdrx.eams.task.MongoStoreTask;
+import com.jdrx.platform.commons.rest.exception.BizException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,6 +28,7 @@ import java.util.function.Consumer;
 @Service
 public class RedisConsumeBGService {
 
+    private Logger logger = LoggerFactory.getLogger(RedisConsumeBGService.class);
     private final static String QUEUE_KEY = "queue:servers_info";
     private final static int MAX_RESTART_COUNT = 10;
     private int restartCount ;
@@ -31,18 +36,23 @@ public class RedisConsumeBGService {
     private ScheduledExecutorService executorService;
     private RedisQueue<String> redisQueue;
     private Consumer<String> queueConsumer;
-//    @Autowired
-//    private MongoDao mongoDao;
+    @Autowired
+    private ServerInfoDAO serverInfoDAO;
 
     @Autowired
-    @Qualifier("stringRedisTemplate")
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     @PostConstruct
     private void init(){
         redisQueue = new RedisQueue<>(redisTemplate,QUEUE_KEY);
         queueConsumer= (val)->{
                 System.out.println(val);
+            try {
+                serverInfoDAO.upsert(val);
+            } catch (BizException e) {
+                // todo
+                logger.warn("插入失败");
+            }
         };
         executorService = new ScheduledThreadPoolExecutor(1);
         MongoStoreTask task = new MongoStoreTask(this,queueConsumer);
