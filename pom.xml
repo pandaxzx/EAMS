@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jdrx.eams</groupId>
+    <artifactId>jdrx-eams-start</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>jdrx-eams-beans</module>
+        <module>jdrx-eams-api</module>
+        <module>jdrx-eams-boot</module>
+    </modules>
+
+    <parent>
+        <artifactId>platform-parent</artifactId>
+        <groupId>com.jdrx.platform</groupId>
+        <version>1.2.4</version>
+    </parent>
+
+    <properties>
+        <downloadSources>true</downloadSources>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <jdrx.platform.version>1.2.4</jdrx.platform.version>
+    </properties>
+
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.jdrx.platform</groupId>
+            <artifactId>platform-jdbc-mysql</artifactId>
+            <version>${jdrx.platform.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>Test</scope>
+        </dependency>
+
+    </dependencies>
+</project>
