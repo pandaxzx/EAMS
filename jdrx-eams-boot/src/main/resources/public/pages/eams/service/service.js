@@ -13,6 +13,8 @@ var EAMSService = function ($http) {
             // find    : baseApi + '/get',
             listAll : baseApi + '/findAll',
             listBy  : baseApi + '/findBy',
+            getStatus: baseApi + '/getStatus',
+            findStatus: baseApi + '/findStatus',
         },
         msgConfig = {
             offset  : 'rt',
@@ -70,5 +72,12 @@ var EAMSService = function ($http) {
     };
     this.listBy = function(selectDto){
         return $post(apis.listBy,selectDto);
+    };
+    this.findStatus = function(ips){
+        return $post(apis.findStatus,ips);
+    };
+
+    this.getStatus = function(ip){
+      return $post(apis.getStatus,{id:ip});  
     };
 };
