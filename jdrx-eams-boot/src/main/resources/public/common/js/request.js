@@ -4,4 +4,4 @@
  * 创建时间：2018/8/9
  */
 
-var api_host = 'http://192.168.50.30:8082';
+var api_host = 'http://localhost:8082';

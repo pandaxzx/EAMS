@@ -7,12 +7,13 @@ import com.jdrx.platform.commons.rest.exception.BizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ServerStatusService {
     @Autowired
     private ServerStatusDAO serverStatusDAO;
-
-    /*
+    /**
      * 获取实时信息
      * @param
      * @return ServerStatusDTO
@@ -24,8 +25,18 @@ public class ServerStatusService {
         }else {
             throw new BizException("ip不能为空");
         }
-
-
     }
-
+    /**
+     * 获取实时信息
+     *
+     * @param
+     * @return ServerStatusDTO
+     */
+    public List<ServerStatusDTO> findServerStatus(List<String> ipList) throws BizException {
+        if (ipList != null) {
+            return serverStatusDAO.find(ipList);
+        }else {
+            throw new BizException("ip不能为空");
+        }
+    }
 }

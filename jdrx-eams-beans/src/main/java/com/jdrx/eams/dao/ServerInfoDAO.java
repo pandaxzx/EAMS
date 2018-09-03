@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 @Component
 public class ServerInfoDAO {
-    static final String COLLECTION_NAME="serverInfo";
+    private static final String COLLECTION_NAME="serverInfo";
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -67,20 +67,6 @@ public class ServerInfoDAO {
         return null;
     }
 
-    public void saveList(List<String> serverInfoList) throws BizException {
-        JsonMapper mapper = new JsonMapper();
-        try {
-            for (String string : serverInfoList) {
-                ServerInfoPO serverInfoPO = mapper.readValue(string, ServerInfoPO.class);
-                mongoTemplate.save(serverInfoPO,COLLECTION_NAME);
-            }
-
-        } catch (Exception e) {
-            throw new BizException("插入失败");
-        }
-
-    }
-
     public void upsert(String serverInfoString) throws BizException {
         try {
             JsonMapper mapper = new JsonMapper();
@@ -93,21 +79,12 @@ public class ServerInfoDAO {
                     update.set(entry.getKey(), entry.getValue());
                 }
             }
-            mongoTemplate.upsert(query, update, COLLECTION_NAME);
+            mongoTemplate.upsert(query, update, ServerInfoPO.class,COLLECTION_NAME);
         } catch (Exception e) {
             throw new BizException("插入失败");
         }
-
     }
 
-    public void save(ServerInfoPO serverInfoPO) throws BizException {
-        try {
-            mongoTemplate.save(serverInfoPO,COLLECTION_NAME);
-        } catch (Exception e) {
-            throw new BizException("插入失败");
-        }
-
-    }
     public PageVO<ServerInfoPO> findAll(Integer pageNum, Integer pageSize) throws BizException {
         try {
             PageVO<ServerInfoPO> pageVO = new PageVO<>();
@@ -115,11 +92,11 @@ public class ServerInfoDAO {
 
             long count = mongoTemplate.count(query, COLLECTION_NAME);
             pageVO.setTotal(count);
-
             Pageable pageable = new PageRequest(pageNum , pageSize);
             query.with(pageable);
             List<ServerInfoPO> serverInfoList = mongoTemplate.find(query, ServerInfoPO.class, COLLECTION_NAME);
-            pageVO.setPageNum(pageNum);
+
+            pageVO.setPageNum (pageNum);
             pageVO.setPageSize(pageSize);
             pageVO.setData(serverInfoList);
             return pageVO;
@@ -127,6 +104,4 @@ public class ServerInfoDAO {
             throw new BizException("查找失败");
         }
     }
-
-
 }

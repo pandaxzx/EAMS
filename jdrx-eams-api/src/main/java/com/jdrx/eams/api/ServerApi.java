@@ -13,6 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/server")
@@ -24,10 +26,23 @@ public class ServerApi {
     @Autowired
     private ServerStatusService serverStatusService;
 
+
     @ApiOperation(value = "根据条件查询", notes = "根据条件查询")
-    @RequestMapping(value = "/findServer", method = RequestMethod.POST)
+    @RequestMapping(value = "/findBy", method = RequestMethod.POST)
     public ResposeVO findServerByCondition(@RequestBody ServerInfoDTO serverInfoDTO) throws BizException {
         return ResponseFactory.ok(serverInfoService.findByCondition(serverInfoDTO));
+    }
+
+    @ApiOperation(value = "分页查询服务器信息", notes = "分页查询服务器信息")
+    @RequestMapping(value = "/findAll", method = RequestMethod.POST)
+    public ResposeVO findAllServerInfo(@RequestBody PageDTO pageDTO) throws BizException {
+        return ResponseFactory.ok(serverInfoService.findAllServer(pageDTO));
+    }
+
+    @ApiOperation(value = "打开网页时获取服务器状态", notes = "打开网页时获取服务器状态")
+    @RequestMapping(value = "/findStatus", method = RequestMethod.POST)
+    public ResposeVO findServerStatus(@RequestBody List<String> ipList) throws BizException {
+        return ResponseFactory.ok(serverStatusService.findServerStatus(ipList));
     }
 
     @ApiOperation(value = "获取服务器实时信息", notes = "获取服务器实时信息")
@@ -35,19 +50,6 @@ public class ServerApi {
     public ResposeVO getServerStatus(@RequestBody IdDTO<String> idDTO) throws BizException {
         return ResponseFactory.ok(serverStatusService.getServerStatus(idDTO));
 
-    }
-
-    @ApiOperation(value = "插入服务器信息", notes = "插入服务器信息")
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResposeVO saveServerInfo(@RequestBody ServerInfoDTO serverInfoDTO) throws BizException {
-        serverInfoService.saveServerInfo(serverInfoDTO);
-        return ResponseFactory.ok("插入成功");
-    }
-
-    @ApiOperation(value = "分页查询服务器信息", notes = "分页查询服务器信息")
-    @RequestMapping(value = "/finAll", method = RequestMethod.POST)
-    public ResposeVO findAllServerInfo(@RequestBody PageDTO pageDTO) throws BizException {
-        return ResponseFactory.ok(serverInfoService.findAllServer(pageDTO));
     }
 
 
