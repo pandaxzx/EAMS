@@ -34,4 +34,7 @@ angular.module('app.rbac_user',['ui.router','ui.bootstrap', 'w5c.validator'])
     }])
     .controller("RBACUserCtrl", RBACUserCtrl)
     .controller('RBACUserModalCtrl',RBACUserModalCtrl)
+    .controller("RBACUserRoleModalCtrl", RBACUserRoleModalCtrl)
+    .service('RBACDeptService',RBACDeptService)
+    .service('RBACRoleService',RBACRoleService)
     .service('RBACUserService', RBACUserService);

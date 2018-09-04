@@ -15,6 +15,8 @@
                 <th>用户编号</th>
                 <th>用户名</th>
                 <th>用户密码</th>
+                <th>所属部门</th>
+                <th>角色</th>
                 <th>操作</th>
             </tr>
             <tr ng-repeat="(id,data) in result.map">
@@ -22,9 +24,14 @@
                 <td>{{data.name}}</td>
                 <td>{{data.pwd}}</td>
                 <td>
+                    <span>{{depts[data.dept_id].name}}</span>
+                </td>
+                <td>
+                    <a href="javascript:" ng-click="toSetRoles(data)">详情</a>
+                </td>
+                <td>
                     <a href="javascript:" ng-click="toUpd(data)">修改</a>
                     <a href="javascript:" ng-click="del(data.id)">删除</a>
-                    <a href="javascript:" ng-click="del(data.id)">授权</a>
                 </td>
             </tr>
         </table>
