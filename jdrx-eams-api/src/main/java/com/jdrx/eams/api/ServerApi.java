@@ -33,6 +33,7 @@ public class ServerApi {
         return ResponseFactory.ok(serverInfoService.findByCondition(serverInfoDTO));
     }
 
+    
     @ApiOperation(value = "分页查询服务器信息", notes = "分页查询服务器信息")
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public ResposeVO findAllServerInfo(@RequestBody PageDTO pageDTO) throws BizException {
@@ -44,6 +45,8 @@ public class ServerApi {
     public ResposeVO findServerStatus(@RequestBody List<String> ipList) throws BizException {
         return ResponseFactory.ok(serverStatusService.findServerStatus(ipList));
     }
+
+
 
     @ApiOperation(value = "获取服务器实时信息", notes = "获取服务器实时信息")
     @RequestMapping(value = "/getStatus", method = RequestMethod.POST)
