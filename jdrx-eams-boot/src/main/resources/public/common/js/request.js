@@ -8,7 +8,3 @@ var api_host = 'http://192.168.50.30:8082';
 api_host = 'http://localhost:8082';
 
 var baseApi = api_host+'/api';
-
-var apis = {
-    
-};
