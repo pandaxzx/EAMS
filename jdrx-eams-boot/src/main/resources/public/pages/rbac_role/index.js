@@ -34,4 +34,6 @@ angular.module('app.rbac_role',['ui.router','ui.bootstrap', 'w5c.validator'])
     }])
     .controller("RBACRoleCtrl", RBACRoleCtrl)
     .controller('RBACRoleModalCtrl',RBACRoleModalCtrl)
-    .service('RBACRoleService', RBACRoleService);
+    .controller('RBACRoleResouceModalCtrl',RBACRoleResouceModalCtrl)
+    .service('RBACRoleService', RBACRoleService)
+    .service('RBACResourceService', RBACResourceService);

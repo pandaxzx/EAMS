@@ -17,7 +17,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/server")
+@RequestMapping(value = "/api/server",method = RequestMethod.POST)
 @Api(value = "服务器资源信息")
 public class ServerApi {
     @Autowired

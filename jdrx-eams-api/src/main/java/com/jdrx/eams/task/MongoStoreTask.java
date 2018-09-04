@@ -1,6 +1,5 @@
 package com.jdrx.eams.task;
 
-import com.google.common.collect.Lists;
 import com.jdrx.eams.beans.bo.RedisQueue;
 import com.jdrx.eams.service.RedisConsumeBGService;
 import org.slf4j.Logger;
@@ -8,8 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**

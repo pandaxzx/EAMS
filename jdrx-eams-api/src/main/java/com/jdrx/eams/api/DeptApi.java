@@ -26,7 +26,7 @@ public class DeptApi {
     @RequestMapping(value = "/find", method = RequestMethod.POST)
     public ResposeVO findAll(@RequestBody PageDTO pageDTO) {
 
-        return ResponseFactory.ok(deptService.list());
+        return ResponseFactory.ok(deptService.list(null));
     }
 
     @ApiOperation(value = "查询部门", notes = "查询部门")
@@ -46,7 +46,7 @@ public class DeptApi {
     @ApiOperation(value = "删除部门", notes = "删除部门")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ResposeVO deleteUser(@RequestBody IdDTO<Long> idDTO) throws BizException {
-        deptService.delete(idDTO.getId());
+        deptService.deleteById(idDTO.getId());
         return ResponseFactory.ok("删除成功");
     }
 

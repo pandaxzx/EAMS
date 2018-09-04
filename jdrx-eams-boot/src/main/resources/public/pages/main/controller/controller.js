@@ -7,22 +7,23 @@ var MainCtrl = function ($scope,$sce) {
     $scope.aaa = 'aaa';
     $scope.htmlTooltip = $sce.trustAsHtml('代码示例 <code>id:5</code>');
     $scope.menus = [
+        // {
+        //     label: '首页',
+        //     route: 'main.home',
+        //     badge: '1',
+        //     icon: 'glyphicon-th-large'
+        // }, {
+        //     label: '基础列表',
+        //     route: 'main.list',
+        //     badge: '',
+        //     icon: 'glyphicon-globe'
+        // }, {
+        //     label: '学生列表',
+        //     route: 'main.student',
+        //     badge: '',
+        //     icon: 'glyphicon-globe'
+        // }, 
         {
-            label: '首页',
-            route: 'main.home',
-            badge: '1',
-            icon: 'glyphicon-th-large'
-        }, {
-            label: '基础列表',
-            route: 'main.list',
-            badge: '',
-            icon: 'glyphicon-globe'
-        }, {
-            label: '学生列表',
-            route: 'main.student',
-            badge: '',
-            icon: 'glyphicon-globe'
-        }, {
             label: '资产管理',
             route: 'main.eams',
             badge: '',
@@ -51,21 +52,22 @@ var MainCtrl = function ($scope,$sce) {
                     badge: ''
                 }
             ]
-        }, {
-            label: '系统管理',
-            badge: '',
-            icon: 'glyphicon-cog',
-            children: [
-                {
-                    label: '用户管理',
-                    route: 'main.student',
-                    badge: ''
-                }, {
-                    label: '角色管理',
-                    route: 'main.main2',
-                    badge: ''
-                }
-            ]
-        }
+        },
+        //  {
+        //     label: '系统管理',
+        //     badge: '',
+        //     icon: 'glyphicon-cog',
+        //     children: [
+        //         {
+        //             label: '用户管理',
+        //             route: 'main.student',
+        //             badge: ''
+        //         }, {
+        //             label: '角色管理',
+        //             route: 'main.main2',
+        //             badge: ''
+        //         }
+        //     ]
+        // }
     ];
 };

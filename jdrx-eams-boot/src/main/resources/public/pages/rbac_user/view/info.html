@@ -26,6 +26,15 @@
                         <input type="text" ng-model="user.pwd" class="form-control">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">用户部门:</label>
+                    <div class="col-md-6">
+                        <select type="text" ng-model="user.dept_id" class="form-control" >
+                            <option value="-1" selected>--- 请选择 ---</option> 
+                            <option ng-repeat="(id,dept) in depts" value="{{id}}">{{dept.name}}</option> 
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">

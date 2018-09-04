@@ -13,6 +13,8 @@ var RBACUserService = function ($http) {
             delete  : baseApi + '/delete',
             find    : baseApi + '/find',
             get : baseApi + '/get',
+            findRoles: baseApi + '/findRoles',
+            authRoles: baseApi + '/authRoles',
             // listBy  : baseApi + '/findBy',
         },
         msgConfig = {
@@ -88,5 +90,17 @@ var RBACUserService = function ($http) {
 
     this.find = function(page){
         return $post(apis.find,page);
+    };
+
+    this.findRoles = function(data){
+        return $post(apis.findRoles,data);
+    };
+
+    /**
+     * 
+     * @param [{user_id,role_id}] data 
+     */
+    this.authRoles = function(data){
+        return $post(apis.authRoles,data);
     };
 };

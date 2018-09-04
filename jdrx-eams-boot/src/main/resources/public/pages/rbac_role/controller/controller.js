@@ -3,11 +3,12 @@
  * 创建人：pluto
  * 创建时间：2018/8/3
  */
-var RBACRoleCtrl = function ($scope,$uibModal,$log,RBACRoleService) {
+var RBACRoleCtrl = function ($scope,$uibModal,$log,RBACRoleService,RBACResourceService) {
     $scope.role = {
         id  : undefined,
         name: undefined,
     };
+    $scope.resouces = {};
     $scope.result = {
         map : {},
         page:{
@@ -54,7 +55,6 @@ var RBACRoleCtrl = function ($scope,$uibModal,$log,RBACRoleService) {
             }
         }
     };
-
 
     // 绑定事件
     $scope.find = function(){
@@ -138,12 +138,49 @@ var RBACRoleCtrl = function ($scope,$uibModal,$log,RBACRoleService) {
             $log.info('Modal cancel at: ' + aaa + "," + new Date());
         });
     };
+    $scope.toAuth = function (role_id){
+        var modalInstance = $uibModal.open({
+            templateUrl: 'pages/rbac_role/view/auth.html',
+            controller: 'RBACRoleResouceModalCtrl',
+            backdrop: "static",
+            size: 'md',
+            resolve: {
+                data: function(){
+                    return {
+                        roleId: role_id,
+                        resouces: $scope.resouces,
+                    };
+                }
+            }
+        });
+
+        modalInstance.result.then(function (data) {
+            RBACRoleService.authResources(data);
+        }, function (aaa) {
+            $log.info('Modal cancel at: ' + aaa + "," + new Date());
+        });
+    };
+
     $scope.onPageChange = function () {
         console.log('aaa',$scope.result.page.current);
         $scope.find();
     };
-
-
+    
+    var init = function(){
+        $scope.findAll();
+        RBACResourceService.find({})
+            .then(function(res){
+                res.forEach(function(row){
+                    var node = {
+                        id: row.id,
+                        pId: row.pid || 0,
+                        name: row.name,
+                        // open: false,
+                    };
+                    $scope.resouces[node.id] = node;
+                });
+            });
+    };
     
     $scope.dat = new Date();
     $scope.format = "yyyy/MM/dd";
@@ -170,17 +207,92 @@ var RBACRoleCtrl = function ($scope,$uibModal,$log,RBACRoleService) {
     $scope.open2 = function () {
         $scope.popup2.opened = true;
     };
-    $scope.findAll();
+
+    init();
 };
 
 var RBACRoleModalCtrl = function ($scope, $uibModalInstance, data) {
     $scope.role = angular.copy(data);
-    $scope.gender = ["MALE","FEMALE"];
     $scope.confirm = function () {
         $uibModalInstance.close($scope.role);
     };
     $scope.close = function () {
         $uibModalInstance.dismiss("cancel");
     };
+};
 
+var RBACRoleResouceModalCtrl = function($scope,$uibModalInstance, RBACRoleService, data){
+    var roleId = angular.copy(data.roleId);
+    var nodes = angular.copy(data.resouces);
+    var oldResources = [];
+
+    $scope.confirm = function () {
+        var result = [];
+        for(var id in nodes){
+            if( nodes[id].checked ){
+                result.push({
+                    role_id: roleId,
+                    resource_id: nodes[id].id
+                });
+            }
+        }
+        if( 0 == result.length ){
+            result.push({
+                role_id: roleId,
+            });
+        }
+        $uibModalInstance.close(result);
+    };
+    $scope.close = function () {
+        $uibModalInstance.dismiss("cancel");
+    };
+
+    var onCheck = function(e, treeId, treeNode){
+        console.log(treeNode);
+        var id = treeNode.id;
+        nodes[id].checked = treeNode.checked;
+        if( treeNode.children ){
+            var childs = treeNode.children;
+            for(var index in childs){
+                id = childs[index].id;
+                nodes[id].checked = treeNode.checked;
+            }
+        }
+    };
+    var init = function(){
+        var setting = {
+            check:{
+                enable: true,
+                chkboxType :{ "Y" : "ps", "N" : "ps" },
+            },
+            callback:{
+                onCheck: onCheck,
+            },
+            view: { 
+                selectedMulti: false 
+            }, 
+            data: { 
+                simpleData: { 
+                    enable: true 
+                } 
+            }, 
+        };
+        var zNodes = [];
+        for(var id in nodes){
+            zNodes.push(nodes[id]);
+        }
+
+        RBACRoleService.findResources({id:roleId})
+            .then(function(res){
+                res.forEach(function(id){
+                    oldResources.push(id);
+                    nodes[id].checked = true;
+                });
+            })
+            .then(function(){
+                $.fn.zTree.init($("#resourceTree"), setting, zNodes);
+            });        
+    };
+
+    init();
 };

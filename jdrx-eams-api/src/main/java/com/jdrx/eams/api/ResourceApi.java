@@ -24,7 +24,7 @@ public class ResourceApi {
     @ApiOperation(value = "增加资源", notes = "增加资源")
     @RequestMapping(value = "/find", method = RequestMethod.POST)
     public ResposeVO findAll(@RequestBody PageDTO pageDTO) {
-        return ResponseFactory.ok(resourceService.list());
+        return ResponseFactory.ok(resourceService.list(null));
     }
 
     @ApiOperation(value = "查询资源", notes = "查询资源")
@@ -44,7 +44,7 @@ public class ResourceApi {
     @ApiOperation(value = "删除资源", notes = "删除资源")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ResposeVO deleteUser(@RequestBody IdDTO<Long> idDTO) throws BizException {
-        resourceService.delete(idDTO.getId());
+        resourceService.deleteById(idDTO.getId());
         return ResponseFactory.ok("删除成功");
     }
 
