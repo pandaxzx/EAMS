@@ -83,4 +83,8 @@ var RBACDeptService = function ($http) {
     this.find = function(page){
         return $post(apis.find,page);
     };
+
+    this.findAll = function(){
+        return $post(apis.find,{});
+    }
 };
