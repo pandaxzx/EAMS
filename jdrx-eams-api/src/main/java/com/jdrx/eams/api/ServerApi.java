@@ -25,15 +25,12 @@ public class ServerApi {
 
     @Autowired
     private ServerStatusService serverStatusService;
-
-
     @ApiOperation(value = "根据条件查询", notes = "根据条件查询")
     @RequestMapping(value = "/findBy", method = RequestMethod.POST)
     public ResposeVO findServerByCondition(@RequestBody ServerInfoDTO serverInfoDTO) throws BizException {
         return ResponseFactory.ok(serverInfoService.findByCondition(serverInfoDTO));
     }
 
-    
     @ApiOperation(value = "分页查询服务器信息", notes = "分页查询服务器信息")
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public ResposeVO findAllServerInfo(@RequestBody PageDTO pageDTO) throws BizException {
@@ -46,16 +43,11 @@ public class ServerApi {
         return ResponseFactory.ok(serverStatusService.findServerStatus(ipList));
     }
 
-
-
     @ApiOperation(value = "获取服务器实时信息", notes = "获取服务器实时信息")
     @RequestMapping(value = "/getStatus", method = RequestMethod.POST)
     public ResposeVO getServerStatus(@RequestBody IdDTO<String> idDTO) throws BizException {
         return ResponseFactory.ok(serverStatusService.getServerStatus(idDTO));
 
     }
-
-
-
 
 }
