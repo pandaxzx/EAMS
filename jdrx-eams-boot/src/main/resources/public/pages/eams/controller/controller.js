@@ -72,13 +72,24 @@ var EAMSCtrl = function ($scope,$uibModal,$log,EAMSService) {
 
 
     // 绑定事件
-    $scope.getStatus = function(server){
-        // EAMSService.getStatus(server.ip)
-        //     .then(function(res){
-        //         server.status = res;
-        //     });
+    var toShowStatus = function(server){
+        var modalInstance = $uibModal.open({
+            templateUrl: 'pages/eams/view/status.html',
+            controller: 'EAMSStatusModalCtrl',
+            backdrop: "static",
+            size: 'lg',
+            resolve: {
+                data: function(){
+                    return server;
+                }
+            }
+        });
 
-        return '在线';
+        modalInstance.result.then(function (server) {
+            // $log.info('Modal dismissed at: ' + selectedItem + "," + new Date());
+        }, function (aaa) {
+            $log.info('Modal cancel at: ' + aaa + "," + new Date());
+        });
     };
 
     var findStatus = function(){
@@ -91,11 +102,13 @@ var EAMSCtrl = function ($scope,$uibModal,$log,EAMSService) {
             .then(function(res){
                 if( Array.isArray(res) ){
                     var i = 0;
-                    ips.forEach(function(){
+                    ips.forEach(function(ip){
                         map[ip].status = res[i++];
                     });
-                }                
-        });
+                    return true;
+                }
+                return false; 
+            });
     };
 
     var find = function(){
@@ -123,8 +136,8 @@ var EAMSCtrl = function ($scope,$uibModal,$log,EAMSService) {
 
     $scope.find = find;
     $scope.findAll = findAll;
-
-
+    $scope.findStatus = findStatus;
+    $scope.toShowStatus = toShowStatus;
 
     $scope.detail = function(data){
         console.log(data);
@@ -208,4 +221,24 @@ var EAMSModalCtrl = function ($scope, $uibModalInstance, data) {
         $uibModalInstance.dismiss("cancel");
     };
 
+};
+
+var EAMSStatusModalCtrl = function($scope,$uibModalInstance,EAMSService,data){
+    $scope.server = angular.copy(data);
+
+    $scope.confirm = function () {
+        $uibModalInstance.close($scope.server);
+    };
+    $scope.close = function () {
+        $uibModalInstance.dismiss("cancel");
+    };
+
+    var init = function(){
+        var server = $scope.server;
+        EAMSService.getStatus(server.ip)
+        .then(function(res){
+            server.status = res;
+        });
+    };
+    init();
 };

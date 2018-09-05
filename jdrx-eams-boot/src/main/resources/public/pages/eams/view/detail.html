@@ -55,25 +55,6 @@
                         <td>{{data.gateway}}</td>
                     </tr>
                 </table>
-
-                <h3>运行状态</h3>
-                <table class="table">
-                    <tr>
-                        <th class="col-sm-1">编号</th>
-                        <th class="col-sm-3">cpu使用率</th>
-                        <th class="col-sm-3">磁盘使用量</th>
-                        <th class="col-sm-3">内存占用量</th>
-                        <th class="col-sm-3">进程数量</th>
-                    </tr>
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{server.status.cpu}}%</td>
-                        <td>{{server.status.disk}} G</td>
-                        <td>{{server.status.memory}} G</td>
-                        <td>{{server.status.processes}}</td>
-                    </tr>
-                </table>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" ng-click="close()">返回</button>

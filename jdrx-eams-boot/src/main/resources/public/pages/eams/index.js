@@ -34,4 +34,5 @@ angular.module('app.eams',['ui.router','ui.bootstrap', 'w5c.validator'])
     }])
     .controller("EAMSCtrl", EAMSCtrl)
     .controller('EAMSModalCtrl',EAMSModalCtrl)
+    .controller('EAMSStatusModalCtrl',EAMSStatusModalCtrl)
     .service('EAMSService', EAMSService);

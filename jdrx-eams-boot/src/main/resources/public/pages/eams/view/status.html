@@ -1,11 +1,26 @@
 <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" ng-click="close()"><span>&times;</span></button>
-            <h4 class="modal-title" id="exampleModalLabel">记录详情</h4>
+            <h4 class="modal-title" id="exampleModalLabel">运行状态信息</h4>
         </div>
         <form w5c-form-validate="" novalidate name="customerForm">
             <div class="modal-body">
-                
+                <table class="table">
+                    <tr>
+                        <th class="col-sm-1">编号</th>
+                        <th class="col-sm-3">cpu使用率</th>
+                        <th class="col-sm-3">磁盘使用量</th>
+                        <th class="col-sm-3">内存占用量</th>
+                        <th class="col-sm-3">进程数量</th>
+                    </tr>
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{server.status.cpu || "-"}}%</td>
+                        <td>{{server.status.disk || "-"}} G</td>
+                        <td>{{server.status.memory || "-"}} G</td>
+                        <td>{{server.status.processes ||"-"}}</td>
+                    </tr>
+                </table>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" ng-click="close()">返回</button>
