@@ -25,7 +25,6 @@ public class ServerApi {
 
     @Autowired
     private ServerStatusService serverStatusService;
-
     @ApiOperation(value = "根据条件查询", notes = "根据条件查询")
     @RequestMapping(value = "/findBy", method = RequestMethod.POST)
     public ResposeVO findServerByCondition(@RequestBody ServerInfoDTO serverInfoDTO) throws BizException {

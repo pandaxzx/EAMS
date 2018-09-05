@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 public class ServerInfoService {
     @Autowired
     private ServerInfoDAO serverInfoDAO;
-
-    /*
+    /**
      * 根据条件查询
-     * @param ServerInfoDTO
+     * @param serverInfoDTO
      * @return PageVO<ServerInfoPO>
      * */
     public PageVO<ServerInfoPO> findByCondition(ServerInfoDTO serverInfoDTO) throws BizException {
@@ -29,35 +28,17 @@ public class ServerInfoService {
             return serverInfoDAO.findBy(serverInfoPO, serverInfoDTO.getPageNum(), serverInfoDTO.getPageSize());
         }
     }
-
-
-     /** 插入基本信息
-     * @param serverInfoDTO
-     * */
-    public void saveServerInfo(ServerInfoDTO serverInfoDTO) throws BizException {
-        if (serverInfoDTO != null && serverInfoDTO.getIp() != null) {
-            ServerInfoPO serverInfoPO = new ServerInfoPO();
-            BeanUtils.copyProperties(serverInfoDTO, serverInfoPO);
-            serverInfoDAO.save(serverInfoPO);
-        } else {
-            throw new BizException("主机信息为空");
-        }
-    }
-
-    /*
+    /**
      * 分页查询
      * @param pageDTO
      * @return PageVO
      * */
     public PageVO<ServerInfoPO> findAllServer(PageDTO pageDTO) throws BizException {
-        if (pageDTO != null&&pageDTO.getPageNum()!=null) {
+        if (pageDTO != null && pageDTO.getPageNum() != null) {
             PageVO<ServerInfoPO> pageVO = serverInfoDAO.findAll(pageDTO.getPageNum(), pageDTO.getPageSize());
             return pageVO;
         }else {
             throw new BizException("查找失败");
         }
     }
-
-
-
 }
