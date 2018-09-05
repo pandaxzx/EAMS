@@ -12,13 +12,10 @@ angular.module('app.rbac_user',['ui.router','ui.bootstrap', 'w5c.validator'])
                 required : '编号不能为空',
                 maxlength: '编号长度不能大于{maxlength}'
             },
-            age: {
+            pwd: {
                 required : '描述不能为空',
                 pattern  : '年龄在1-100之间',
             },
-            gender: {
-                required : "该选项不能为空"
-            }
         });
         $stateProvider.state('main.rbac_user',{
             url: '/rbac/user',

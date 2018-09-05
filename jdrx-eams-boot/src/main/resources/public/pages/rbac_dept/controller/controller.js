@@ -62,6 +62,14 @@ var RBACDeptCtrl = function ($scope,$uibModal,$log,RBACDeptService) {
 
 
     // 绑定事件
+    $scope.findAll = function(){
+        var reqPage = $scope.result.page;
+        reqPage = {
+            pageNum : reqPage.current - 1,
+            pageSize: reqPage.pageSize
+        };
+        RBACDeptService.find(reqPage).then(setResult);
+    };
     $scope.find = function(){
         var reqPage = $scope.result.page;
         
@@ -72,20 +80,15 @@ var RBACDeptCtrl = function ($scope,$uibModal,$log,RBACDeptService) {
                 pageSize: reqPage.pageSize
             }
         };
-        RBACDeptService
-            .get(selectDto)
-            .then(function(res){
-                setResult(res);
-            })
-        ;
-    };
-    $scope.findAll = function(){
-        var reqPage = $scope.result.page;
-        reqPage = {
-            pageNum : reqPage.current - 1,
-            pageSize: reqPage.pageSize
-        };
-        RBACDeptService.find(reqPage).then(setResult);
+        if( selectDto.id ){
+            RBACDeptService
+                .get(selectDto)
+                .then(function(res){
+                    setResult(res);
+                });
+        }else{
+            $scope.findAll();
+        }
     };
     $scope.toAdd =  function () {
         var modalInstance = $uibModal.open({
@@ -95,7 +98,9 @@ var RBACDeptCtrl = function ($scope,$uibModal,$log,RBACDeptService) {
             size: 'lg',
             resolve : {
                 data: function () {
-                    return {};
+                    return {
+                        depts: $scope.result.map,
+                    };
                 }
             }
         });
@@ -139,7 +144,10 @@ var RBACDeptCtrl = function ($scope,$uibModal,$log,RBACDeptService) {
             size: 'lg',
             resolve: {
                 data: function(){
-                    return dept;
+                    return {
+                        dept:dept,
+                        depts: $scope.result.map,
+                    };
                 }
             }
         });
@@ -193,7 +201,8 @@ var RBACDeptCtrl = function ($scope,$uibModal,$log,RBACDeptService) {
 };
 
 var RBACDeptModalCtrl = function ($scope, $uibModalInstance, data) {
-    $scope.dept = angular.copy(data);
+    $scope.dept = angular.copy(data.dept);
+    $scope.depts = angular.copy(data.depts);
     $scope.confirm = function () {
         $uibModalInstance.close($scope.dept);
     };
