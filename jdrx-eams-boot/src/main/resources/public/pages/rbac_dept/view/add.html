@@ -16,8 +16,8 @@
                 <div class="form-group">
                     <label class="control-label col-md-3">上级部门:</label>
                     <div class="col-md-6">
-                        <select name="pid" ng-model="dept.pid" class="form-control" ng-init="dept.pid = dept.pid+''">
-                            <option value="" ng-selected="1">--- 请选择 ---</option>
+                        <select name="pid" ng-model="dept.pid" class="form-control" ng-init="dept.pid = dept.pid+''||'-1'">
+                            <option value="-1" ng-selected="1">--- 请选择 ---</option>
                             <option ng-repeat="(id,dp) in depts" value="{{id}}">{{dp.name}}</option>
                         </select>
                     </div>

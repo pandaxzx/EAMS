@@ -35,7 +35,11 @@ var RBACResourceCtrl = function ($scope,$uibModal,$log,RBACResourceService) {
         if( !Array.isArray(data) ){
             data = [data];
         }
-        data && 0 < data.length && data.forEach(function(item){map[item.id]=item;});
+        if(data && 0 < data.length ){
+            data.forEach(function(item){
+                map[item.id]=item;
+            });
+        }
         $scope.result.map = map;
     };
     var setPage = function (page){
@@ -58,6 +62,14 @@ var RBACResourceCtrl = function ($scope,$uibModal,$log,RBACResourceService) {
 
 
     // 绑定事件
+    $scope.findAll = function(){
+        var reqPage = $scope.result.page;
+        reqPage = {
+            pageNum : reqPage.current - 1,
+            pageSize: reqPage.pageSize
+        };
+        RBACResourceService.find(reqPage).then(setResult);
+    };
     $scope.find = function(){
         var reqPage = $scope.result.page;
         
@@ -68,15 +80,15 @@ var RBACResourceCtrl = function ($scope,$uibModal,$log,RBACResourceService) {
                 pageSize: reqPage.pageSize
             }
         };
-        RBACResourceService.get(selectDto).then(function(res){setResult([res]);});
-    };
-    $scope.findAll = function(){
-        var reqPage = $scope.result.page;
-        reqPage = {
-            pageNum : reqPage.current - 1,
-            pageSize: reqPage.pageSize
-        };
-        RBACResourceService.find(reqPage).then(setResult);
+        if( selectDto.id ){
+            RBACResourceService
+                .get(selectDto)
+                .then(function(res){
+                    setResult([res]);
+                });
+        }else{
+            $scope.findAll();
+        }
     };
     $scope.toAdd =  function () {
         var modalInstance = $uibModal.open({
@@ -86,7 +98,9 @@ var RBACResourceCtrl = function ($scope,$uibModal,$log,RBACResourceService) {
             size: 'lg',
             resolve : {
                 data: function () {
-                    return {};
+                    return {
+                        resources: $scope.result.map,
+                    };
                 }
             }
         });
@@ -94,21 +108,31 @@ var RBACResourceCtrl = function ($scope,$uibModal,$log,RBACResourceService) {
         modalInstance.result.then(function (resource) {
             // $log.info('Modal dismissed at: ' + selectedItem + "," + new Date());
             
-            var promise = RBACResourceService.create(resource);
-            promise && promise.then($scope.findAll);
+            RBACResourceService
+                .create(resource)
+                .then(function(res){
+                    if(res){
+                        $scope.findAll();
+                    }
+                });
         }, function (aaa) {
             $log.info('Modal cancel at: ' + aaa + "," + new Date());
         });
     };
  
-    $scope.del = function (id) {
+    $scope.del = function (resource) {
         layer.confirm('确定删除该记录吗？', {
             btnAlign: 'c',
             closeBtn: 1,
             btn: ['确定', '取消'] //按钮
         }, function () {
-            var promise = RBACResourceService.delete({id:id}).then($scope.findAll);
-            promise && promise.then($scope.findAll);
+            RBACResourceService
+                .delete(resource)
+                .then(function(res){
+                    if(res){
+                        $scope.findAll();
+                    }
+                });
         }, function () {
             
         });
@@ -121,7 +145,10 @@ var RBACResourceCtrl = function ($scope,$uibModal,$log,RBACResourceService) {
             size: 'lg',
             resolve: {
                 data: function(){
-                    return resource;
+                    return {
+                        resource:resource,
+                        resources: $scope.result.map,
+                    };
                 }
             }
         });
@@ -129,12 +156,13 @@ var RBACResourceCtrl = function ($scope,$uibModal,$log,RBACResourceService) {
         modalInstance.result.then(function (resource) {
             // $log.info('Modal dismissed at: ' + selectedItem + "," + new Date());
             
-            var promise = RBACResourceService.update(resource);
-            promise && promise.then(
-                function(){
-                    updData(resource);
-                }
-            );
+            RBACResourceService
+                .update(resource)
+                .then(function(res){
+                    if(res){
+                        updData(resource);
+                    }
+                });
         }, function (aaa) {
             $log.info('Modal cancel at: ' + aaa + "," + new Date());
         });
@@ -175,8 +203,8 @@ var RBACResourceCtrl = function ($scope,$uibModal,$log,RBACResourceService) {
 };
 
 var RBACResourceModalCtrl = function ($scope, $uibModalInstance, data) {
-    $scope.resource = angular.copy(data);
-    $scope.gender = ["MALE","FEMALE"];
+    $scope.resource = angular.copy(data.resource);
+    $scope.resources = angular.copy(data.resources);
     $scope.confirm = function () {
         $uibModalInstance.close($scope.resource);
     };
