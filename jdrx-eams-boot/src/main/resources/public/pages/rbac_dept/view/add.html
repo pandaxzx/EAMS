@@ -9,14 +9,17 @@
                 <div class="form-group">
                     <label class="control-label col-md-3">部门名字:</label>
                     <div class="col-md-6">
-                        <input type="text" ng-model="dept.name" class="form-control"/>
+                        <input type="text" ng-model="dept.name" class="form-control" name="name"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-md-3">上级部门:</label>
                     <div class="col-md-6">
-                        <input type="text" ng-model="dept.pid" class="form-control">
+                        <select name="pid" ng-model="dept.pid" class="form-control" ng-init="dept.pid = dept.pid+''">
+                            <option value="" ng-selected="1">--- 请选择 ---</option>
+                            <option ng-repeat="(id,dp) in depts" value="{{id}}">{{dp.name}}</option>
+                        </select>
                     </div>
                 </div>
             </div>

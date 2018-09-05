@@ -98,7 +98,9 @@ var RBACDeptCtrl = function ($scope,$uibModal,$log,RBACDeptService) {
             size: 'lg',
             resolve : {
                 data: function () {
-                    return {};
+                    return {
+                        depts: $scope.result.map,
+                    };
                 }
             }
         });
@@ -142,7 +144,10 @@ var RBACDeptCtrl = function ($scope,$uibModal,$log,RBACDeptService) {
             size: 'lg',
             resolve: {
                 data: function(){
-                    return dept;
+                    return {
+                        dept:dept,
+                        depts: $scope.result.map,
+                    };
                 }
             }
         });
@@ -196,7 +201,8 @@ var RBACDeptCtrl = function ($scope,$uibModal,$log,RBACDeptService) {
 };
 
 var RBACDeptModalCtrl = function ($scope, $uibModalInstance, data) {
-    $scope.dept = angular.copy(data);
+    $scope.dept = angular.copy(data.dept);
+    $scope.depts = angular.copy(data.depts);
     $scope.confirm = function () {
         $uibModalInstance.close($scope.dept);
     };
