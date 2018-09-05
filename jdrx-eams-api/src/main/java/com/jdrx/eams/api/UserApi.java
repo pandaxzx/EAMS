@@ -25,6 +25,13 @@ public class UserApi {
     @Autowired
     private UserService userService;
 
+    @ApiOperation(value = "用户登陆", notes = "用户登陆")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResposeVO login(@RequestBody Map<String, Object> user) {
+        return ResponseFactory.ok(userService.findByNameAndPwd(user));
+    }
+
+
     @ApiOperation(value = "增加用户", notes = "增加用户")
     @RequestMapping(value = "/find", method = RequestMethod.POST)
     public ResposeVO findAll(@RequestBody Map<String, Object> user) {
