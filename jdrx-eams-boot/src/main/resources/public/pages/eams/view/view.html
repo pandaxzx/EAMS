@@ -3,14 +3,10 @@
         <div class="form-inline">
             <div class="form-group">
                 <label for="exampleInputName1">ip地址</label>
-                <input type="number" class="form-control" id="exampleInputName1" placeholder="00001" ng-model="stu.id">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputName2">学生姓名</label>
-                <input type="text" class="form-control" id="exampleInputName2" placeholder="string" ng-model="stu.name">
+                <input type="text" class="form-control" id="exampleInputName1" placeholder="00001" ng-model="server.ip">
             </div>
             <button type="submit" class="btn btn-default" ng-click="find()">搜索</button>
-            <button class="btn btn-primary" ng-click="toAdd()">新增</button>
+            <button class="btn btn-primary" ng-click="findStatus()">刷新</button>
         </div>
     </div>
     <div class="table-responsive">
@@ -34,15 +30,13 @@
                 <td>{{data.cpus.length}}</td>
                 <td>{{data.interfaces.length}}</td>
                 <td>
-                    <a ng-show="data.status" href="javascript:" ng-click="getStatus(data)">在线</a>
+                    <a ng-show="data.status" href="javascript:" ng-click="toShowStatus(data)">在线</a>
                     <span ng-hide="data.status">下线</span>
                 </td>
                 <td>
                     <!-- <a href="javascript:" ng-click="getStatus(data)">状态</a> -->
                     <a href="javascript:" ng-click="detail(data)">详情</a>
-                    <a href="javascript:" ng-click="refreshStatus(data)">刷新</a>
                     <a href="javascript:" ng-click="del(data.ip)">删除</a>
-                    <a href="javascript:" ng-click="upd(data)">修改</a>
                 </td>
             </tr>
         </table>

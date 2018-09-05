@@ -21,7 +21,8 @@ var EAMSService = function ($http) {
             width   : 500,
             height  : 200,
         };
-
+    this.apis =apis;
+    
     var $post = function(url,data){
         var promise = $http.post(url,data)
                         .then(function(resp){
