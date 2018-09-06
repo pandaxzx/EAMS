@@ -24,9 +24,9 @@ public class DeptApi {
 
     @ApiOperation(value = "增加部门", notes = "增加部门")
     @RequestMapping(value = "/find", method = RequestMethod.POST)
-    public ResposeVO findAll(@RequestBody PageDTO pageDTO) {
+    public ResposeVO findAll(@RequestBody Map<String,Object> map) {
 
-        return ResponseFactory.ok(deptService.list(null));
+        return ResponseFactory.ok(deptService.list(map));
     }
 
     @ApiOperation(value = "查询部门", notes = "查询部门")

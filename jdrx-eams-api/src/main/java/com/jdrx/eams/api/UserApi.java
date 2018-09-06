@@ -32,7 +32,7 @@ public class UserApi {
     }
 
 
-    @ApiOperation(value = "增加用户", notes = "增加用户")
+    @ApiOperation(value = "查询全部用户", notes = "查询全部用户")
     @RequestMapping(value = "/find", method = RequestMethod.POST)
     public ResposeVO findAll(@RequestBody Map<String, Object> user) {
         return ResponseFactory.ok(userService.list(user));
