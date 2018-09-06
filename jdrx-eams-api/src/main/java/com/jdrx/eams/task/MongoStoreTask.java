@@ -66,13 +66,18 @@ public class MongoStoreTask<T> implements Runnable {
         }
     }
 
-
+    /**
+     * 开始任务之前需要执行
+     */
     private void beforeWork(){
         if( null != beforeWork){
             beforeWork.accept(this);
         }
     }
 
+    /**
+     * 停止之后需要执行的任务
+     */
     private void afterExit(){
         if( null != exHandler){
             exHandler.accept(this);
