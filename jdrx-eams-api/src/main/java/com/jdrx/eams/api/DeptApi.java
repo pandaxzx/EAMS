@@ -32,19 +32,14 @@ public class DeptApi {
 
     /**
      * 查找所有部门
-     * @param pageDTO 分页,无用
+     * @param map 分页,无用
      * @return
      */
     @ApiOperation(value = "查找所有部门", notes = "查找所有部门")
     @RequestMapping(value = "/find", method = RequestMethod.POST)
-<<<<<<< HEAD
     public ResposeVO findAll(@RequestBody Map<String,Object> map) {
 
         return ResponseFactory.ok(deptService.list(map));
-=======
-    public ResposeVO findAll(@RequestBody PageDTO pageDTO) {
-        return ResponseFactory.ok(deptService.list(null));
->>>>>>> 01923e2f9cf0af5f89469350dfd489aeba411a5a
     }
 
     /**
