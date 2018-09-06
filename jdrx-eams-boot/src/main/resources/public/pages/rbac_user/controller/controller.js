@@ -107,7 +107,9 @@ var RBACUserCtrl = function ($scope,$uibModal,$log,RBACUserService, RBACRoleServ
             size: 'lg',
             resolve : {
                 data: function () {
-                    return {};
+                    return {
+                        depts: $scope.depts,
+                    };
                 }
             }
         });

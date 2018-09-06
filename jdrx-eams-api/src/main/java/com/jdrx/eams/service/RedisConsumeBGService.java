@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -28,22 +29,18 @@ public class RedisConsumeBGService {
     private Logger logger = LoggerFactory.getLogger(RedisConsumeBGService.class);
     private final static String QUEUE_KEY = "queue:servers_info";
     private final static int MAX_RESTART_COUNT = 10;
+    private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
     private int restartCount ;
     private Thread worker;
-    private ScheduledExecutorService executorService;
     private RedisQueue<String> redisQueue;
-    private Consumer<String> queueConsumer;
-    @Autowired
-    private ServerInfoDAO serverInfoDAO;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+    @Autowired private ServerInfoDAO serverInfoDAO;
+    @Autowired private RedisTemplate redisTemplate;
 
     @PostConstruct
     private void init(){
         redisQueue = new RedisQueue<>(redisTemplate,QUEUE_KEY);
-        queueConsumer= (val)->{
-                System.out.println(val);
+        Consumer<String> queueConsumer= (val)->{
             try {
                 serverInfoDAO.upsert(val);
             } catch (BizException e) {
@@ -51,8 +48,14 @@ public class RedisConsumeBGService {
                 logger.warn("插入失败");
             }
         };
-        executorService = new ScheduledThreadPoolExecutor(1);
-        MongoStoreTask task = new MongoStoreTask(this,queueConsumer);
+        Consumer beforeWork = (obj)->{
+            logger.info("listen queue:servers_info start");
+        };
+        Consumer exitWithExHandler = (obj)->{
+            logger.info("listen queue:servers_info stop");
+            this.autoRestart();
+        };
+        MongoStoreTask<String> task = new MongoStoreTask<>(redisQueue,queueConsumer,beforeWork,exitWithExHandler);
         this.worker = new Thread(task);
         worker.setDaemon(true);
         worker.setName("T-RedisQueueService");
@@ -98,8 +101,10 @@ public class RedisConsumeBGService {
      */
     public void autoRestart(){
         if(MAX_RESTART_COUNT >= restartCount){
-            restart(1000L * 60L * restartCount);
+            restart( 60L * restartCount);
             ++restartCount;
+        }else{
+            logger.warn("重启次数达到上限");
         }
     }
 
@@ -116,8 +121,8 @@ public class RedisConsumeBGService {
     public void stop(){
         if (worker.isAlive()) {
             worker.interrupt();
+            clearRestartCount();
         }
-        clearRestartCount();
     }
 
     /**
@@ -129,4 +134,11 @@ public class RedisConsumeBGService {
         return redisQueue;
     }
 
+    /**
+     *
+     * @return
+     */
+    public String getQueueKey(){
+        return QUEUE_KEY;
+    }
 }
