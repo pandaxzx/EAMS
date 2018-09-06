@@ -1,10 +1,8 @@
 package com.jdrx.eams.task;
 
 import com.jdrx.eams.beans.bo.RedisQueue;
-import com.jdrx.eams.service.RedisConsumeBGService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.function.Consumer;
@@ -17,42 +15,67 @@ import java.util.function.Consumer;
  * @date 2018/8/28 0028 16:04
  */
 
-public class MongoStoreTask implements Runnable {
+public class MongoStoreTask<T> implements Runnable {
 
     private final static Logger logger = LoggerFactory.getLogger(MongoStoreTask.class);
-//    private MongoDao mongoDao;
-    private final RedisConsumeBGService container;
-    private final RedisQueue<String> redisQueue;
-    private final Consumer consumer;
+    private final RedisQueue<T> redisQueue;
+    private final Consumer<T> consumer;
+    private final Consumer beforeWork ;
+    private final Consumer exHandler;
 
-    public MongoStoreTask(@NotNull RedisConsumeBGService container, @NotNull Consumer consumer){
-        this.container = container;
-        this.redisQueue = container.getRedisQueue();
+    public MongoStoreTask(@NotNull RedisQueue<T> redisQueue, @NotNull Consumer<T> consumer){
+        this(redisQueue,consumer,null,null);
+    }
+
+    public MongoStoreTask(@NotNull RedisQueue<T> redisQueue, @NotNull Consumer<T> consumer, Consumer beforeWork, Consumer exHandler){
+        this.redisQueue = redisQueue;
         this.consumer = consumer;
+        this.beforeWork = beforeWork;
+        this.exHandler = exHandler;
     }
 
     @Override
     public void run() {
         try{
+            beforeWork();
+            T value = null;
             while(true){
                 if(Thread.currentThread().isInterrupted()){
                     logger.warn("线程中断");
                     break;
                 }
-                String value = redisQueue.blockLPop();
-                //逐个执行
-                if( !StringUtils.isEmpty(value) ){
-                    try{
-                        consumer.accept(value);
-                    }catch(Exception e){
-                        logger.error("调用失败", e);
-                    }
+                try {
+                    value = redisQueue.blockLPop();
+                }catch (InterruptedException e){
+                    //todo
+                    Thread.currentThread().interrupt();
+                }
+                try{
+                    consumer.accept(value);
+                }catch(Exception e){
+                    logger.error("处理失败", e);
                 }
             }
         }catch(Exception e){
             //todo
             logger.error("轮循线程异常退出", e);
-            container.autoRestart();
+            afterExit();
+        }finally {
+//            redisQueue 释放资源
+            logger.info("线程工作结束");
+        }
+    }
+
+
+    private void beforeWork(){
+        if( null != beforeWork){
+            beforeWork.accept(this);
+        }
+    }
+
+    private void afterExit(){
+        if( null != exHandler){
+            exHandler.accept(this);
         }
     }
 }

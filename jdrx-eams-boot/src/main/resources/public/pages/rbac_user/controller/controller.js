@@ -36,7 +36,11 @@ var RBACUserCtrl = function ($scope,$uibModal,$log,RBACUserService, RBACRoleServ
     };
     var setData = function (data){
         var map = {};
-        data && 0 < data.length && data.forEach(function(item){map[item.id]=item;});
+        if( data && 0 < data.length ){
+            data.forEach(function(item){
+                map[item.id]=item;
+            });
+        } 
         $scope.result.map = map;
     };
     var setPage = function (page){
@@ -63,6 +67,16 @@ var RBACUserCtrl = function ($scope,$uibModal,$log,RBACUserService, RBACRoleServ
 
 
     // 绑定事件
+    $scope.findAll = function(){
+        var reqPage = $scope.result.page;
+        reqPage = {
+            pageNum : reqPage.current - 1,
+            pageSize: reqPage.pageSize
+        };
+        RBACUserService
+            .find(reqPage)
+            .then(setResult);
+    };
     $scope.find = function(){
         var reqPage = $scope.result.page;
         
@@ -73,15 +87,17 @@ var RBACUserCtrl = function ($scope,$uibModal,$log,RBACUserService, RBACRoleServ
                 pageSize: reqPage.pageSize
             }
         };
-        RBACUserService.get(selectDto).then(function(res){setResult([res]);});
-    };
-    $scope.findAll = function(){
-        var reqPage = $scope.result.page;
-        reqPage = {
-            pageNum : reqPage.current - 1,
-            pageSize: reqPage.pageSize
-        };
-        RBACUserService.find(reqPage).then(setResult);
+        if( selectDto.id ){
+            RBACUserService
+                .get(selectDto)
+                .then(function(res){
+                    if(res){
+                        setResult([res]);
+                    }
+                });
+        }else{
+            $scope.findAll();
+        }
     };
     $scope.toAdd =  function () {
         var modalInstance = $uibModal.open({
@@ -91,33 +107,41 @@ var RBACUserCtrl = function ($scope,$uibModal,$log,RBACUserService, RBACRoleServ
             size: 'lg',
             resolve : {
                 data: function () {
-                    return {};
+                    return {
+                        depts: $scope.depts,
+                    };
                 }
             }
         });
 
         modalInstance.result.then(function (user) {
             // $log.info('Modal dismissed at: ' + selectedItem + "," + new Date());
-            
-            var promise = RBACUserService.create(user);
-            if( promise ){
-                promise.then($scope.findAll);
-            }
+            RBACUserService
+                .create(user)
+                .then(function(res){
+                    if(res){
+                        $scope.findAll();
+                    }
+                });
         }, function (aaa) {
             $log.info('Modal cancel at: ' + aaa + "," + new Date());
         });
     };
  
-    $scope.del = function (id) {
+    $scope.del = function (user) {
         layer.confirm('确定删除该记录吗？', {
             btnAlign: 'c',
             closeBtn: 1,
             btn: ['确定', '取消'] //按钮
         }, function () {
-            var promise = RBACUserService.delete({id}).then($scope.findAll);
-            promise && promise.then($scope.findAll);
+            RBACUserService
+                .delete(user)
+                .then(function(res){
+                    if(res){
+                        $scope.findAll();
+                    }
+                });
         }, function () {
-            
         });
     };
     $scope.toUpd = function (user) {
@@ -138,7 +162,8 @@ var RBACUserCtrl = function ($scope,$uibModal,$log,RBACUserService, RBACRoleServ
 
         modalInstance.result.then(function (user) {
             // $log.info('Modal dismissed at: ' + selectedItem + "," + new Date());
-            RBACUserService.update(user)
+            RBACUserService
+                .update(user)
                 .then(function(res){
                         if(res){
                             updData(user);
@@ -270,12 +295,26 @@ var RBACUserRoleModalCtrl = function ($scope, $uibModalInstance, RBACUserService
     var onCheck = function(e, treeId, treeNode){
         console.log(treeNode);
         var id = treeNode.id;
+        var childs = null;
         nodes[id].checked = treeNode.checked;
         if( treeNode.children ){
-            var childs = treeNode.children;
+            childs = treeNode.children;
             for(var index in childs){
                 id = childs[index].id;
                 nodes[id].checked = treeNode.checked;
+            }
+        }
+        var parentNode = treeNode.getParentNode();
+        if( null != parentNode && undefined != parentNode ){
+            var pid = parentNode.id;
+            nodes[pid].checked = true;
+            childs = parentNode.children;
+            for(var i in childs){
+                id = childs[i].id;
+                if( !nodes[id].checked ){
+                    nodes[pid].checked = false;
+                    break;
+                }
             }
         }
     };

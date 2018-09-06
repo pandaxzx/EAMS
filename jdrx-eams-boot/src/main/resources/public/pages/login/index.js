@@ -23,5 +23,7 @@ angular.module('app.login',['ui.router', 'w5c.validator'])
             controller: 'LoginCtrl',
             controllerAs: 'login',
             resolve: {}
-        })
-    }]).controller("LoginCtrl", LoginCtrl);
+        });
+    }])
+    .controller("LoginCtrl", LoginCtrl)
+    .service("RBACLoginService",RBACLoginService);

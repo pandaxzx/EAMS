@@ -9,11 +9,19 @@ import com.jdrx.platform.commons.rest.exception.BizException;
 import com.jdrx.platform.commons.rest.factory.ResponseFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
+/**
+ * @author xzx
+ * @version 1.1
+ * @updater dnf
+ * @updateDate 18/9/5
+ */
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/rbac/dept")
@@ -22,37 +30,68 @@ public class DeptApi {
     @Autowired
     private DeptService deptService;
 
-    @ApiOperation(value = "增加部门", notes = "增加部门")
+    /**
+     * 查找所有部门
+     * @param pageDTO 分页,无用
+     * @return
+     */
+    @ApiOperation(value = "查找所有部门", notes = "查找所有部门")
     @RequestMapping(value = "/find", method = RequestMethod.POST)
+<<<<<<< HEAD
     public ResposeVO findAll(@RequestBody Map<String,Object> map) {
 
         return ResponseFactory.ok(deptService.list(map));
+=======
+    public ResposeVO findAll(@RequestBody PageDTO pageDTO) {
+        return ResponseFactory.ok(deptService.list(null));
+>>>>>>> 01923e2f9cf0af5f89469350dfd489aeba411a5a
     }
 
+    /**
+     * 通过id 查找一个部门
+     * @param idDTO 非null
+     * @return
+     */
     @ApiOperation(value = "查询部门", notes = "查询部门")
     @RequestMapping(value = "/get", method = RequestMethod.POST)
-    public ResposeVO getResource(@RequestBody IdDTO<Long> idDTO) {
+    public ResposeVO get( @NotNull @RequestBody IdDTO<Long> idDTO) {
         return ResponseFactory.ok(deptService.findById(idDTO.getId()));
     }
 
-
+    /**
+     * 更新部门信息
+     * @param map 部门基本信息映射
+     *            eg: {id,name,pid}
+     * @return
+     */
     @ApiOperation(value = "更新部门", notes = "更新部门")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResposeVO updateUser(@RequestBody Map<String,Object> map) {
+    public ResposeVO update(@RequestBody Map<String,Object> map) {
         deptService.update(map);
         return ResponseFactory.ok("更新成功");
     }
 
+    /**
+     * 根据 id 删除部门
+     * @param idDTO 非null
+     * @return
+     */
     @ApiOperation(value = "删除部门", notes = "删除部门")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public ResposeVO deleteUser(@RequestBody IdDTO<Long> idDTO) throws BizException {
+    public ResposeVO delete( @NotNull @RequestBody IdDTO<Long> idDTO) {
         deptService.deleteById(idDTO.getId());
         return ResponseFactory.ok("删除成功");
     }
 
+    /**
+     * 添加一个部门
+     * @param map 部门信息映射
+     *            eg:{name,pid}
+     * @return
+     */
     @ApiOperation(value = "添加部门", notes = "添加部门")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResposeVO saveUser(@RequestBody Map<String,Object> map) throws BizException {
+    public ResposeVO save(@RequestBody Map<String,Object> map){
         deptService.save(map);
         return ResponseFactory.ok("添加成功");
     }

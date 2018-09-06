@@ -16,4 +16,6 @@ angular.module('app.main',['ui.bootstrap','ui.router'])
                 label: '九鼎模板'
             }
         })
-    }).controller("MainCtrl", MainCtrl);
+    })
+    .controller("MainCtrl", MainCtrl)
+    .service("RBACLoginService",RBACLoginService);

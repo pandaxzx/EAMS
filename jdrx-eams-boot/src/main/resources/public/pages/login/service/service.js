@@ -4,16 +4,12 @@
  * 创建时间：2018/8/9
  */
 
-var RBACDeptService = function ($http) {
+var RBACLoginService = function ($http) {
     
-    var baseApi =  api_host+'/api/rbac/dept',
+    var baseApi =  api_host+'/api/user',
         apis = {
-            create  : baseApi + '/save',
-            update  : baseApi + '/update',
-            delete  : baseApi + '/delete',
-            find    : baseApi + '/find',
-            get : baseApi + '/get',
-            // listBy  : baseApi + '/findBy',
+            login: baseApi + '/login',
+            getResources: baseApi + '/resources',
         },
         msgConfig = {
             offset  : 'rt',
@@ -64,27 +60,37 @@ var RBACDeptService = function ($http) {
         return promise;
     };
 
-    this.create = function(dept){
-        return $post(apis.create,dept);
+    var loggedUser = null;
+
+    this.getLoggedUser = function(){
+        return loggedUser;
     };
 
-    this.delete = function(dept){
-        return $post(apis.delete,dept);
+    this.setLoggedUser = function(user){
+        this.getMenus(user)
+            .then(function(res){
+                if(res){
+                    loggedUser = angular.copy(user);
+                    loggedUser.resources = res;
+                    loggedUser.menus = [];
+                    for(var index in res){
+                        var menu = {
+                            label : res[index].name + 'mark',
+                            route : res[index].url ,
+                            icon :'glyphicon-globe',
+                        };
+                        loggedUser.menus.push(menu);
+                    }
+
+                }
+            });
     };
 
-    this.update = function(dept){
-        return $post(apis.update,dept);
+    this.login = function(user){
+        return $post(apis.login,user);
     };
 
-    this.get = function(selectDto){
-        return $post(apis.get,selectDto);
-    };
-
-    this.find = function(page){
-        return $post(apis.find,page);
-    };
-
-    this.findAll = function(){
-        return $post(apis.find,{});
+    this.getMenus = function(user){
+        return $post(apis.getResources,user);
     };
 };

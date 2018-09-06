@@ -3,16 +3,17 @@
  * 创建人：pluto
  * 创建时间：2018/8/3
  */
-var MainCtrl = function ($scope,$sce) {
+var MainCtrl = function ($scope,$sce, RBACLoginService) {
     $scope.aaa = 'aaa';
     $scope.htmlTooltip = $sce.trustAsHtml('代码示例 <code>id:5</code>');
-    $scope.menus = [
-        // {
-        //     label: '首页',
-        //     route: 'main.home',
-        //     badge: '1',
-        //     icon: 'glyphicon-th-large'
-        // }, {
+    var menus = [
+        {
+            label: '首页',
+            route: 'main.home',
+            badge: '1',
+            icon: 'glyphicon-th-large'
+        },
+        //  {
         //     label: '基础列表',
         //     route: 'main.list',
         //     badge: '',
@@ -70,4 +71,7 @@ var MainCtrl = function ($scope,$sce) {
         //     ]
         // }
     ];
+    var loggedUser = RBACLoginService.getLoggedUser();
+
+    $scope.menus = menus.concat(loggedUser.menus);
 };
