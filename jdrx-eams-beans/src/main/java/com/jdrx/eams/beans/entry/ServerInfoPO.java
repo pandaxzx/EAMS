@@ -1,7 +1,6 @@
 package com.jdrx.eams.beans.entry;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;

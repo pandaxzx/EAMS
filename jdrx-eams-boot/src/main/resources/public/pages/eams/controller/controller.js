@@ -263,7 +263,7 @@ var EAMSCtrl = function ($scope, $uibModal, $log, EAMSService) {
         var date = new Date(dateStr);
         var time = Date.now() - date;
         time = Math.trunc(time/(60*1000));
-        var timeStr = time;
+        var timeStr = '';
         var day = Math.trunc(time/(60*24));
         if(1<day){
             timeStr += day +" 天";
@@ -276,6 +276,10 @@ var EAMSCtrl = function ($scope, $uibModal, $log, EAMSService) {
         if(1<mm){
             timeStr += mm + ' 分';
         }
+        if(0===timeStr.length){
+            timeStr = time + " 秒";
+        }
+
         return timeStr;
     };
 
