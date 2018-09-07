@@ -26,7 +26,7 @@ public class RedisQueue<T> {
     private final RedisTemplate redisTemplate;
     private final byte[] queueKey;
 
-    public RedisQueue(@NotNull RedisTemplate redisTemplate, @NotBlank String queueKey) {
+    public RedisQueue(@NotNull RedisTemplate<String,T> redisTemplate, @NotBlank String queueKey) {
         this.redisTemplate = redisTemplate;
 //        this.queueKey = redisTemplate.getKeySerializer().serialize(queueKey);
         this.queueKey = queueKey.getBytes(StandardCharsets.UTF_8);

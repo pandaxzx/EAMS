@@ -73,5 +73,9 @@ var MainCtrl = function ($scope,$sce, RBACLoginService) {
     ];
     var loggedUser = RBACLoginService.getLoggedUser();
 
-    $scope.menus = menus.concat(loggedUser.menus);
+    if(loggedUser){
+        $scope.menus = menus.concat(loggedUser.menus);
+    }else{
+        $scope.menus = menus;
+    }
 };

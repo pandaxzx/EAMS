@@ -8,13 +8,14 @@ var EAMSService = function ($http) {
     var baseApi =  api_host+'/api/server',
         apis = {
             // create  : baseApi + '/finAll',
-            // update  : baseApi + '/update',
-            // delete  : baseApi + '/delete',
+            update  : baseApi + '/update',
+            delete  : baseApi + '/delete',
             // find    : baseApi + '/get',
             listAll : baseApi + '/findAll',
             listBy  : baseApi + '/findBy',
             getStatus: baseApi + '/getStatus',
             findStatus: baseApi + '/findStatus',
+            listAllTags: baseApi + '/findTags',
         },
         msgConfig = {
             offset  : 'rt',
@@ -22,7 +23,7 @@ var EAMSService = function ($http) {
             height  : 200,
         };
     this.apis =apis;
-    
+
     var $post = function(url,data){
         var promise = $http.post(url,data)
                         .then(function(resp){
@@ -38,6 +39,7 @@ var EAMSService = function ($http) {
                                 }else{
                                     layer.msg("操作成功",msgConfig);
                                 }
+                                return true;
                             }else{
                                 var msg = "";
 
@@ -54,11 +56,12 @@ var EAMSService = function ($http) {
                                     msg = jsonData.message;
                                 }
 
-                                if(msg){
+                                if(msg && 20 >= msg.length){
                                     layer.msg(msg,msgConfig);
                                 }else{
                                     layer.msg("操作失败",msgConfig);
                                 }
+                                return false;
                             }
                         },function(resp) {
                             layer.msg("请求失败",msgConfig);
@@ -71,6 +74,12 @@ var EAMSService = function ($http) {
         // $http;
         return $post(apis.listAll,page);
     };
+    this.update = function(server){
+        return $post(apis.update,server);
+    };
+    this.delete = function(server){
+        return $post(apis.delete,server);
+    };
     this.listBy = function(selectDto){
         return $post(apis.listBy,selectDto);
     };
@@ -79,6 +88,10 @@ var EAMSService = function ($http) {
     };
 
     this.getStatus = function(ip){
-      return $post(apis.getStatus,{id:ip});  
+      return $post(apis.getStatus,{id:ip});
+    };
+
+    this.listAllTags = function(){
+        return $post(apis.listAllTags);
     };
 };

@@ -1,0 +1,9 @@
+.server-tags{
+    column-count: 3;
+    column-fill: auto;
+    column-gap: 10px;
+}
+
+.server-tag{
+    white-space: nowrap;
+}

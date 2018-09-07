@@ -2,41 +2,58 @@
     <div class="action-bar">
         <div class="form-inline">
             <div class="form-group">
-                <label for="exampleInputName1">ip地址</label>
-                <input type="text" class="form-control" id="exampleInputName1" placeholder="00001" ng-model="server.ip">
+                <label for="ip">ip地址</label>
+                <input name="ip" type="text" class="form-control" placeholder="00001" ng-model="server.ip">
             </div>
-            <button type="submit" class="btn btn-default" ng-click="find()">搜索</button>
+            <div class="form-group">
+                <label for="envs">envs</label>
+                <input name="envs" type="text" class="form-control" placeholder="env1,env2..." ng-model="$envs">
+            </div>
+            <div class="form-group">
+                <label for="apps">apps</label>
+                <input name="apps" type="text" class="form-control" placeholder="app1,app2..." ng-model="$apps">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="find(1)">搜索</button>
             <button class="btn btn-primary" ng-click="findStatus()">刷新</button>
         </div>
     </div>
     <div class="table-responsive">
         <table class="table">
             <tr>
-                <th>ip地址</th>
-                <th>host地址</th>
-                <th>上次开机时间</th>
-                <th>内存大小</th>
-                <th>cpu内核数量</th>
-                <th>网络接口数量</th> 
-                <th>运行状态</th> 
-
-                <th>操作</th>
+                <th>ip</th>
+                <th>host</th>
+                <th>envs</th>
+                <th>apps</th>
+                <th>alive_time</th>
+                <th>memsize</th>
+                <th>cpu_core</th>
+                <th>cpu usage</th>
+                <th>disk usage</th>
+                <th>memory usage</th>
+                <th>progress</th>
+                <th>ops</th>
             </tr>
             <tr ng-repeat="(ip,data) in result.map" >
                 <td>{{data.ip}}</td>
                 <td>{{data.host}}</td>
-                <td>{{data.startAt}}</td>
-                <td>{{data.memory}} G</td>
-                <td>{{data.cpus.length}}</td>
-                <td>{{data.interfaces.length}}</td>
                 <td>
-                    <a ng-show="data.status" href="javascript:" ng-click="toShowStatus(data)">在线</a>
-                    <span ng-hide="data.status">下线</span>
+                    <span ng-repeat="id in data.envs">{{envs[id].name}} </span>
                 </td>
                 <td>
-                    <!-- <a href="javascript:" ng-click="getStatus(data)">状态</a> -->
+                    <span ng-repeat="id in data.apps">{{apps[id].name}} </span>
+                </td>
+                <td>{{getAliveTime(data)}}</td>
+                <td>{{data.memory}} G</td>
+                <td>{{data.cpus.length}}</td>
+                <td>{{data.status.cpu ? data.status.cpu+'%': ""}}</td>
+                <td>{{data.status.disk ? data.status.disk+'G': ""}}</td>
+                <td>{{data.status.memory ? data.status.memory+'G':''}}</td>
+                <td>{{data.status.processes}}</td>
+                <td>
                     <a href="javascript:" ng-click="detail(data)">详情</a>
-                    <a href="javascript:" ng-click="del(data.ip)">删除</a>
+                    <a href="javascript:" ng-click="getStatus(data)">刷新</a>
+                    <a href="javascript:" ng-click="toUpd(data)">更新</a>
+                    <a href="javascript:" ng-click="del(data)">删除</a>
                 </td>
             </tr>
         </table>
