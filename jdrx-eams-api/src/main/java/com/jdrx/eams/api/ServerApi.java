@@ -25,6 +25,13 @@ public class ServerApi {
 
     @Autowired
     private ServerStatusService serverStatusService;
+
+    @ApiOperation(value = "查询所有环境和App", notes = "查询所有环境和App")
+    @RequestMapping(value = "/findTags", method = RequestMethod.POST)
+    public ResposeVO findTags() throws BizException {
+        return ResponseFactory.ok(serverInfoService.findTags());
+    }
+
     @ApiOperation(value = "根据条件查询", notes = "根据条件查询")
     @RequestMapping(value = "/findBy", method = RequestMethod.POST)
     public ResposeVO findServerByCondition(@RequestBody ServerInfoDTO serverInfoDTO) throws BizException {
@@ -35,6 +42,13 @@ public class ServerApi {
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public ResposeVO findAllServerInfo(@RequestBody PageDTO pageDTO) throws BizException {
         return ResponseFactory.ok(serverInfoService.findAllServer(pageDTO));
+    }
+
+    @ApiOperation(value = "更新服务器信息", notes = "更新服务器信息")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResposeVO update(@RequestBody ServerInfoDTO serverInfoDTO) throws BizException {
+        serverInfoService.updateServer(serverInfoDTO);
+        return ResponseFactory.ok("更新成功");
     }
 
     @ApiOperation(value = "打开网页时获取服务器状态", notes = "打开网页时获取服务器状态")

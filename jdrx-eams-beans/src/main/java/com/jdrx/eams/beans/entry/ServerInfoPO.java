@@ -1,6 +1,7 @@
 package com.jdrx.eams.beans.entry;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
@@ -13,6 +14,13 @@ public class ServerInfoPO {
     //ip
     @Id
     private String ip;
+
+    //所属环境
+    private List<Integer> envs;
+
+    //运行的app
+    private List<Integer> apps;
+
     //主机名称
     private String host;
     //cpu型号
@@ -31,6 +39,8 @@ public class ServerInfoPO {
     public String toString() {
         return "ServerInfoPO{" +
                 "ip='" + ip + '\'' +
+                ", envs=" + envs +
+                ", apps=" + apps +
                 ", host='" + host + '\'' +
                 ", cpus=" + cpus +
                 ", interfaces=" + interfaces +
@@ -38,6 +48,22 @@ public class ServerInfoPO {
                 ", disks=" + disks +
                 ", startAt=" + startAt +
                 '}';
+    }
+
+    public List<Integer> getEnvs() {
+        return envs;
+    }
+
+    public void setEnvs(List<Integer> envs) {
+        this.envs = envs;
+    }
+
+    public List<Integer> getApps() {
+        return apps;
+    }
+
+    public void setApps(List<Integer> apps) {
+        this.apps = apps;
     }
 
     public String getIp() {

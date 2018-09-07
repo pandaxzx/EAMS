@@ -1,5 +1,6 @@
 package com.jdrx.eams.beans.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jdrx.eams.beans.entry.CpuPO;
 import com.jdrx.eams.beans.entry.DiskPO;
 import com.jdrx.eams.beans.entry.InterfacePO;
@@ -19,6 +20,12 @@ public class ServerInfoDTO extends PageDTO {
     @ApiModelProperty(value = "ip地址",notes = "ip地址")
     private String ip;
 
+    @ApiModelProperty(value = "所属环境",notes = "所属环境")
+    private List<Integer> envs;
+
+    @ApiModelProperty(value = "运行的app",notes = "运行的app")
+    private List<Integer> apps;
+
     @ApiModelProperty(value = "主机名",notes = "主机名")
     private String host;
 
@@ -35,8 +42,25 @@ public class ServerInfoDTO extends PageDTO {
     private List<DiskPO> disks;
 
     @ApiModelProperty(value = "上次开机时间",notes = "上次开机时间")
+    @JsonFormat(pattern="yyyy-MM-dd_hh:mm")
     private Date startAt;
 
+
+    public List<Integer> getEnvs() {
+        return envs;
+    }
+
+    public void setEnvs(List<Integer> envs) {
+        this.envs = envs;
+    }
+
+    public List<Integer> getApps() {
+        return apps;
+    }
+
+    public void setApps(List<Integer> apps) {
+        this.apps = apps;
+    }
 
     public String getIp() {
         return ip;

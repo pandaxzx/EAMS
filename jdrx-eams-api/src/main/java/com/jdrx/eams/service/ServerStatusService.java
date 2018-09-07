@@ -1,5 +1,6 @@
 package com.jdrx.eams.service;
 
+import com.jdrx.basic.rbac.dao.ExtendDao;
 import com.jdrx.eams.beans.dto.ServerStatusDTO;
 import com.jdrx.eams.dao.ServerStatusDAO;
 import com.jdrx.platform.commons.rest.beans.dto.IdDTO;
@@ -13,6 +14,7 @@ import java.util.List;
 public class ServerStatusService {
     @Autowired
     private ServerStatusDAO serverStatusDAO;
+
     /**
      * 获取实时信息
      * @param
