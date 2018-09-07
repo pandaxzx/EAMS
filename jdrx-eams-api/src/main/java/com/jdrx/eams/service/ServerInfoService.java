@@ -2,6 +2,7 @@ package com.jdrx.eams.service;
 
 import com.jdrx.basic.rbac.dao.ExtendDao;
 import com.jdrx.eams.dao.ServerInfoDAO;
+import com.jdrx.platform.commons.rest.beans.dto.IdDTO;
 import com.jdrx.platform.commons.rest.exception.BizException;
 import com.jdrx.platform.jdbc.beans.vo.PageVO;
 import com.jdrx.eams.beans.dto.PageDTO;
@@ -21,6 +22,20 @@ public class ServerInfoService {
     private ServerInfoDAO serverInfoDAO;
     @Autowired
     private ExtendDao extendDao;
+
+    /**
+     * 删除主机
+     * @param idDTO
+     * @return null
+     */
+    public void deleteServer(IdDTO<String> idDTO) throws BizException {
+        if (idDTO != null) {
+            serverInfoDAO.deleteById(idDTO.getId());
+        }else {
+            throw new BizException("ip不能为空");
+        }
+    }
+
 
     /**
      * 从mysql获取所有环境和所有app
@@ -56,7 +71,8 @@ public class ServerInfoService {
      * @return PageVO<ServerInfoPO>
      * */
     public PageVO<ServerInfoPO> findByCondition(ServerInfoDTO serverInfoDTO) throws BizException {
-        if (serverInfoDTO.getIp()==null&&serverInfoDTO.getHost()==null&&serverInfoDTO.getApps()==null&&serverInfoDTO.getEnvs()==null) {
+        if (serverInfoDTO.getIp()==null &&serverInfoDTO.getHost()==null
+                &&serverInfoDTO.getApps()==null&&serverInfoDTO.getEnvs()==null) {
             return serverInfoDAO.findAll(serverInfoDTO.getPageNum(),serverInfoDTO.getPageSize());
         } else {
             ServerInfoPO serverInfoPO = new ServerInfoPO();

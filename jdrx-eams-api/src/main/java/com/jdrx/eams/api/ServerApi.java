@@ -26,6 +26,14 @@ public class ServerApi {
     @Autowired
     private ServerStatusService serverStatusService;
 
+    @ApiOperation(value = "删除主机", notes = "删除主机")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResposeVO deleteServer(@RequestBody IdDTO idDTO) throws BizException {
+        serverInfoService.deleteServer(idDTO);
+        return ResponseFactory.ok("删除成功");
+    }
+
+
     @ApiOperation(value = "查询所有环境和App", notes = "查询所有环境和App")
     @RequestMapping(value = "/findTags", method = RequestMethod.POST)
     public ResposeVO findTags() throws BizException {

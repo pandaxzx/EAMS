@@ -25,6 +25,20 @@ public class ServerInfoDAO {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    public void deleteById(String id) throws BizException {
+        try {
+            Query query = new Query(Criteria.where("ip").is(id));
+            ServerInfoPO serverInfoPO = mongoTemplate.findOne(query, ServerInfoPO.class, COLLECTION_NAME);
+            if (serverInfoPO != null) {
+                mongoTemplate.remove(query, ServerInfoPO.class, COLLECTION_NAME);
+            } else {
+                throw new BizException("主机不存在");
+            }
+        } catch (Exception e) {
+            throw new BizException("删除失败");
+        }
+    }
+
     public PageVO<ServerInfoPO> findBy(ServerInfoPO serverInfoPO,Integer pageNum,Integer pageSize) throws BizException {
         if (serverInfoPO.getIp() != null ) {
             try {
