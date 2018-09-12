@@ -33,7 +33,6 @@ public class ServerApi {
         return ResponseFactory.ok("删除成功");
     }
 
-
     @ApiOperation(value = "查询所有环境和App", notes = "查询所有环境和App")
     @RequestMapping(value = "/findTags", method = RequestMethod.POST)
     public ResposeVO findTags() throws BizException {

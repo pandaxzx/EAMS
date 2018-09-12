@@ -26,6 +26,7 @@
         <module>jdrx-eams-boot</module>
         <module>jdrx-eams-beans</module>
         <module>jdrx-eams-api</module>
+        <module>jdrx-eams-cloudboot</module>
     </modules>
 
     <dependencyManagement>
@@ -56,4 +57,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 </project>
